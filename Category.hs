@@ -1,4 +1,8 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE AllowAmbiguousTypes #-}
+{-# LANGUAGE FunctionalDependencies #-}
 module Category (
 
     ) where
@@ -35,8 +39,17 @@ class (Class s a) => (Set s a) where
         and can be limited by the `ob` function.
 -}
 
-class (Category ob morph) where
+class (Category ob morph) | morph -> ob, ob -> morph where
     ob :: (Class c ob) => c ob
     morph :: (Set morphset morph) => ob -> ob -> morphset morph
     idcat :: ob -> morph
-    compcat :: morph -> morph -> morph
+    (|>) :: morph -> morph -> morph
+
+categoryLaw1 :: (Category ob morph, Eq morph) => ob -> morph -> Bool
+categoryLaw1 ob f = idcat ob == f
+
+categoryLaw2 :: (Category ob morph, Eq morph) => ob -> morph -> Bool
+categoryLaw2 ob f = f == idcat ob
+
+categoryLaw3 :: (Category ob morph, Eq morph) => morph -> morph -> morph -> Bool
+categoryLaw3 f g h = (f |> g) |> h == f |> (g |> h)
