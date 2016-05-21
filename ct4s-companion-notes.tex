@@ -1,0 +1,37 @@
+\documentclass[12pt,twocolumn,oneside]{book}
+
+\begin{document}
+
+\newcommand{\reference}[3]{
+        \textbf{#1:} See \texttt{#2}, the line starting with \texttt{#3}.
+    }
+
+\chapter*{Introduction}
+
+The purpose of this document is to use Coq to go over the examples from
+\emph{Category Theory for Scientists}, a book on Category Theory by David
+Spivak at MIT that is designed to be accessible to non-mathematicians. Often it
+can be easy to be lost in mathematical definitions. However, programming definitions
+can often be easier: programs require a much greater degree of explicitness.
+
+The language Coq is good for this purpose because its types correspond to those
+of category theory quite effectively. Additionally, being dependently typed means
+that it is not difficult to, for example, define the set of numbers less than $n$
+as a type dependent on $n$.
+
+In any case, this document is intended to be an index, taking the form of \emph{CT4S}
+in terms of chapter, section, etc, starting at chapter 4, where Spivak introduces
+formal category-theoretic concepts. Each section will refer to the appropriate
+part of one of the Coq files.
+
+\setcounter{chapter}{3}
+\chapter{Basic Category Theory}
+
+
+\section{Categories and Functors}
+
+\subsection{Categories}
+
+\reference{Definition of a Category}{Category.v}{Class Category}
+
+\end{document}
