@@ -1,5 +1,4 @@
 Require Import Coq.Program.Basics.
-Require Import Coq.Logic.FunctionalExtensionality.
 
 
 (*A category contains objects and morphisms, along with an identity and composition formula.*)

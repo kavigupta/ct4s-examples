@@ -2,8 +2,13 @@
 
 \begin{document}
 
-\newcommand{\reference}[3]{
-        \textbf{#1:} See \texttt{#2}, the line starting with \texttt{#3}.
+\setcounter{secnumdepth}{5}
+
+\newcommand{\see}[2]{
+        See \texttt{#1}, the line starting with \texttt{#2}.
+    }
+\newcommand{\reference}[4]{
+        #1{#2} \see{#3}{#4}
     }
 
 \chapter*{Introduction}
@@ -32,6 +37,22 @@ part of one of the Coq files.
 
 \subsection{Categories}
 
-\reference{Definition of a Category}{Category.v}{Class Category}
+\reference{\subsubsection}{Definition of a Category}{Category.v}{Class Category}
+
+\subsubsection{Universes and Sets}
+
+Coq's \texttt{Type} has built-in an inferred set of Grothendiek's universes. Therefore,
+while \texttt{Type : Type}, the \texttt{Type}s on each side of the colon are in fact
+distinct, and the one on the left is in a smaller universe.
+
+\subsubsection{The category \textbf{Set}}
+
+In Coq, it is more natural to use types rather than sets as a model category, but
+they are fairly similar: \see{Category.v}{Instance FunCat}. Notice that the proof
+is trivial in all three cases.
+
+However, we can in fact implement Categories for \textbf{Set}, although it ends
+up being more complicated. Functional equality in \textbf{Set} requires us to prove
+that all the targets and sources line up before and after, which can be a pain.
 
 \end{document}
