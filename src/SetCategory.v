@@ -3,7 +3,7 @@ Require Import Coq.Logic.FunctionalExtensionality.
 Require Import Coq.Sets.Ensembles.
 Require Import Coq.Logic.Classical_Prop.
 
-Load category.
+Require Import category.
 
 
 Inductive setarrow (U : Type) (X Y : Ensemble U) : Type
@@ -66,7 +66,7 @@ Proof.
             apply proof_irrelevance.
         rewrite H.
         trivial.
-        
+
         (*left identity*)
         intros A B f.
         destruct f as [f pF].
@@ -81,7 +81,7 @@ Proof.
             apply proof_irrelevance.
         rewrite H0.
         trivial.
-        
+
         (*right identity*)
         intros A B f.
         destruct f as [f pF].
