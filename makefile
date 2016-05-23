@@ -12,6 +12,7 @@ coq:
 	coqc FinCategory.v
 	coqc Monoid.v
 	coqc MonCat.v
+	coqc Group.v
 	cd ..
 
 clean:

@@ -67,13 +67,23 @@ stuff and then apply the \textbf{Set} laws.
 
 \subsubsection{The category \textbf{Mon}}
 
-An implementation of Monoids, along with monoid homorphisms, is presented in
+An implementation of Monoids, along with monoid homomorphism, is presented in
 \texttt{Monoid.v}. The implementation of Monoids as categories is accomplished
 in \texttt{MonCat.v}. Notice how almost all the actual, non-structural proving
 that occurs in \texttt{MonCat.v} is in defining the composition of monoid
-homorphisms, not in the actual implementation of monoids as a category. This is
-because monoid homorphisms being a category follows directly from functions being
+homomorphism, not in the actual implementation of monoids as a category. This is
+because monoid homomorphism being a category follows directly from functions being
 a category, since they are in essence just functions between monids, but the fact
-that their compositions are homorphisms requires some thought.
+that their compositions are homomorphism requires some thought.
+
+\subsubsection{The category \textbf{Grp}}
+
+This ends up being a fairly simple extension of \textbf{Mon} because there is only
+one additional operation, negation, and two additional laws, the left and right
+cancellation laws. As the theorem \texttt{group\_hom\_preserves\_inv} demonstrates,
+the additional group homomorphism law derives entirely from the monoid laws and
+cancellation laws. Therefore, the implementation of groups as categories is in
+fact completely structural, simply requiring the unpacking of the various wrappers
+and the application of the Monoid laws.
 
 \end{document}
