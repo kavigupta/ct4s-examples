@@ -10,4 +10,9 @@ coq:
 	coqc category.v
 	coqc SetCategory.v
 	coqc FinCategory.v
+	cd ..
 
+clean:
+	cd src
+	rm *.glob
+	rm *.vo
