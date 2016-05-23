@@ -13,6 +13,7 @@ coq:
 	coqc Monoid.v
 	coqc MonCat.v
 	coqc Group.v
+	coqc Preorder.v
 	cd ..
 
 clean:
