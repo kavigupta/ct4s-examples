@@ -53,6 +53,13 @@ is trivial in all three cases.
 
 However, we can in fact implement Categories for \textbf{Set}, although it ends
 up being more complicated. Functional equality in \textbf{Set} requires us to prove
-that all the targets and sources line up before and after, which can be a pain.
+that all the targets and sources line up before and after, which can be a pain.\footnote{
+Also, we have to prove that our proofs are equivalent, which is also a pain, but
+it hopefully more easily resolved.}
+
+\subsubsection{The category \textbf{Fin}}
+
+Looking at our definition of \textbf{Set}, we have to provide a universe \texttt{U}
+as an input. \textbf{Fin} is created when \texttt{U}.
 
 \end{document}
