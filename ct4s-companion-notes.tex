@@ -59,7 +59,10 @@ it hopefully more easily resolved.}
 
 \subsubsection{The category \textbf{Fin}}
 
-Looking at our definition of \textbf{Set}, we have to provide a universe \texttt{U}
-as an input. \textbf{Fin} is created when \texttt{U}.
+We can create \textbf{Fin} by requiring sets to be finite. An implementation is
+provided in \texttt{FinCategory.v}. Because the difference between \textbf{Set}
+and \textbf{Fin} is entirely a result of a restriction on the objects, the proofs
+here are almost entirely structural, we just unfold all the \textbf{Fin}--specific
+stuff and then apply the \textbf{Set} laws.
 
 \end{document}
