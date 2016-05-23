@@ -12,7 +12,7 @@ Class Monoid {M : Type}
     }.
 
 Inductive Mon : Type :=
-    cons_monoid (M : Type) (mzero : M) (mplus : M -> M -> M) (mon : Monoid mzero mplus) : Mon.
+    cons_mon (M : Type) (mzero : M) (mplus : M -> M -> M) (mon : Monoid mzero mplus) : Mon.
 
 Definition mplus_fn (A : Type) (f g : A -> A) : A -> A
     := compose f g.
@@ -36,34 +36,34 @@ Generalizable Variables M mzeroM mplusM.
 Generalizable Variables N mzeroN mplusN.
 Generalizable Variables P mzeroP mplusP.
 
-Definition underlying_type (M : Mon) : Type
-   := match M with cons_monoid m _ _ _ => m end.
+Definition undertype_mon (M : Mon) : Type
+   := match M with cons_mon m _ _ _ => m end.
 
-Definition mzero_of (M : Mon) : underlying_type M
-    := match M with cons_monoid _ z _ _ => z end.
+Definition mzero_of (M : Mon) : undertype_mon M
+    := match M with cons_mon _ z _ _ => z end.
 
-Definition mplus_of (M : Mon) : underlying_type M -> underlying_type M -> underlying_type M
-    := match M with cons_monoid _ _ p _ => p end.
+Definition mplus_of (M : Mon) : undertype_mon M -> undertype_mon M -> undertype_mon M
+    := match M with cons_mon _ _ p _ => p end.
 
 Definition monoid_of (M : Mon) : Monoid (mzero_of M) (mplus_of M)
-    := match M with cons_monoid _ _ _ m => m end.
+    := match M with cons_mon _ _ _ m => m end.
 
-Inductive Monoid_Hom (M : Mon) (N : Mon)
+Inductive Mon_Hom (M : Mon) (N : Mon)
             : Type
-    := create_hom
-        (f : underlying_type M -> underlying_type N)
+    := mon_hom
+        (f : undertype_mon M -> undertype_mon N)
         (proof_zero : f (mzero_of M) = mzero_of N)
-        (proof_plus : forall (x y : underlying_type M), f (mplus_of M x y) = mplus_of N (f x) (f y)).
+        (proof_plus : forall (x y : undertype_mon M), f (mplus_of M x y) = mplus_of N (f x) (f y)).
 
-Definition function_of (M N : Mon) (h : Monoid_Hom M N) : underlying_type M -> underlying_type N
-    := match h with create_hom f _ _ => f end.
+Definition mon_hom_fn (M N : Mon) (h : Mon_Hom M N) : undertype_mon M -> undertype_mon N
+    := match h with mon_hom f _ _ => f end.
 
-Theorem monoid_hom_eq (M N : Mon) (f g : Monoid_Hom M N) : 
-        function_of M N f = function_of M N g -> f = g.
+Theorem mon_hom_eq (M N : Mon) (f g : Mon_Hom M N) : 
+        mon_hom_fn M N f = mon_hom_fn M N g -> f = g.
 Proof.
     destruct f as [f fZ fP].
     destruct g as [g gZ gP].
-    unfold function_of.
+    unfold mon_hom_fn.
     intros fg.
     subst f.
     assert (fZ = gZ).

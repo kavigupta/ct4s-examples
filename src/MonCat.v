@@ -3,18 +3,18 @@ Require Import Coq.Program.Basics.
 Require Import category.
 Require Import Monoid.
 
-Theorem hom_id_zero (M : Type) (m : M) : id m = m.
+Theorem mon_id_zero (M : Type) (m : M) : id m = m.
     trivial.
 Qed.
 
-Theorem hom_id_assoc (M : Type) (f : M -> M -> M) (x y : M) : id (f x y) = f (id x) (id y).
+Theorem mon_id_assoc (M : Type) (f : M -> M -> M) (x y : M) : id (f x y) = f (id x) (id y).
     trivial.
 Qed.
 
-Definition id_hom
+Definition id_mon
     (M : Mon)
-        : Monoid_Hom M M
-    := create_hom M M id (hom_id_zero (underlying_type M) (mzero_of M)) (hom_id_assoc (underlying_type M) (mplus_of M)).
+        : Mon_Hom M M
+    := mon_hom M M id (mon_id_zero (undertype_mon M) (mzero_of M)) (mon_id_assoc (undertype_mon M) (mplus_of M)).
 
 Generalizable Variables M mzeroM mplusM.
 Generalizable Variables N mzeroN mplusN.
@@ -50,47 +50,47 @@ Theorem comp_plus_law
     trivial.
 Qed.
 
-Definition comp_hom (M N P : Mon)
-    (f : Monoid_Hom N P)
-    (g : Monoid_Hom M N)
-        : Monoid_Hom M P
+Definition comp_mon (M N P : Mon)
+    (f : Mon_Hom N P)
+    (g : Mon_Hom M N)
+        : Mon_Hom M P
     := 
         match f with
-            create_hom ff zf pf =>
+            mon_hom ff zf pf =>
                 match g with
-                    create_hom gg zg pg =>
-                        create_hom M P (compose ff gg)
+                    mon_hom gg zg pg =>
+                        mon_hom M P (compose ff gg)
                                 (comp_zero_law (monoid_of M) (monoid_of N) (monoid_of P) ff gg zf zg)
                                 (comp_plus_law (monoid_of M) (monoid_of N) (monoid_of P) ff gg pf pg)
                 end
         end.
 
 Instance MonCat : Category
-        id_hom
-        comp_hom.
+        id_mon
+        comp_mon.
     split.
         intros.
-        apply monoid_hom_eq.
-        unfold comp_hom.
-        unfold function_of.
+        apply mon_hom_eq.
+        unfold comp_mon.
+        unfold mon_hom_fn.
         destruct z as [z zZ zP].
         destruct y as [y yZ yP].
         destruct x as [x xZ xP].
         trivial.
         
         intros.
-        apply monoid_hom_eq.
-        unfold comp_hom.
-        unfold id_hom.
+        apply mon_hom_eq.
+        unfold comp_mon.
+        unfold id_mon.
         destruct f as [f z p].
-        unfold function_of.
+        unfold mon_hom_fn.
         trivial.
         
         intros.
-        apply monoid_hom_eq.
-        unfold comp_hom.
-        unfold function_of.
-        unfold id_hom.
+        apply mon_hom_eq.
+        unfold comp_mon.
+        unfold mon_hom_fn.
+        unfold id_mon.
         destruct f as [f z p].
         trivial.
 Qed.
