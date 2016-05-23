@@ -10,6 +10,8 @@ coq:
 	coqc category.v
 	coqc SetCategory.v
 	coqc FinCategory.v
+	coqc Monoid.v
+	coqc MonCat.v
 	cd ..
 
 clean:

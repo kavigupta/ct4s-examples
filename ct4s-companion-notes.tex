@@ -65,4 +65,15 @@ and \textbf{Fin} is entirely a result of a restriction on the objects, the proof
 here are almost entirely structural, we just unfold all the \textbf{Fin}--specific
 stuff and then apply the \textbf{Set} laws.
 
+\subsubsection{The category \textbf{Mon}}
+
+An implementation of Monoids, along with monoid homorphisms, is presented in
+\texttt{Monoid.v}. The implementation of Monoids as categories is accomplished
+in \texttt{MonCat.v}. Notice how almost all the actual, non-structural proving
+that occurs in \texttt{MonCat.v} is in defining the composition of monoid
+homorphisms, not in the actual implementation of monoids as a category. This is
+because monoid homorphisms being a category follows directly from functions being
+a category, since they are in essence just functions between monids, but the fact
+that their compositions are homorphisms requires some thought.
+
 \end{document}
