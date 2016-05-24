@@ -1,0 +1,3 @@
+
+Scheme new_scheme := Induction for _ Sort _
+with _ := Induction for _ Sort _.
