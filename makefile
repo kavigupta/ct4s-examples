@@ -14,6 +14,7 @@ coq:
 	coqc MonCat.v
 	coqc Group.v
 	coqc Preorder.v
+	coqc UnitNatMorph.v
 	cd ..
 
 clean:
