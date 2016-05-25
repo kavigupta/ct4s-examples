@@ -18,6 +18,8 @@ coq:
 	coqc PreorderJoin.v
 	coqc UnitNatMorph.v
 	coqc LinearOrder.v
+	coqc Graph.v
+	coqc GraphCat.v
 	cd ..
 
 clean:
