@@ -38,15 +38,15 @@ Definition undertype_pro (P : PrO) : Type
 Definition ordering (P : PrO) : undertype_pro P -> undertype_pro P -> Prop
     := match P with cons_pro _ o _ _ => o end.
 
-Inductive ProHom (P Q : PrO) : Type
+Inductive PrOHom (P Q : PrO) : Type
     := cons_pro_hom
         (f : undertype_pro P -> undertype_pro Q)
         (preserve : forall (x y : undertype_pro P), ordering P x y -> ordering Q (f x) (f y)).
 
-Definition pro_fn (P Q : PrO) (f : ProHom P Q) : undertype_pro P -> undertype_pro Q
+Definition pro_fn {P Q : PrO} (f : PrOHom P Q) : undertype_pro P -> undertype_pro Q
     := match f with cons_pro_hom u _ => u end.
 
-Theorem pro_hom_eq (P Q : PrO) (f g : ProHom P Q) : pro_fn P Q f = pro_fn P Q g -> f = g.
+Theorem pro_hom_eq (P Q : PrO) (f g : PrOHom P Q) : pro_fn f = pro_fn g -> f = g.
     intros H.
     destruct f as [f presF].
     destruct g as [g presG].
@@ -63,11 +63,11 @@ Theorem id_preserves (P : PrO) (x y : undertype_pro P) : ordering P x y -> order
     trivial.
 Qed.
 
-Definition id_pro (P : PrO) : ProHom P P
+Definition id_pro (P : PrO) : PrOHom P P
     := cons_pro_hom P P (fun (x : undertype_pro P) => x) (id_preserves P).
 
-Theorem comp_preserves (P Q R : PrO) (f : ProHom Q R) (g : ProHom P Q) (x y : undertype_pro P) : 
-   ordering P x y -> ordering R (compose (pro_fn Q R f) (pro_fn P Q g) x) (compose (pro_fn Q R f) (pro_fn P Q g) y).
+Theorem comp_preserves (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) (x y : undertype_pro P) : 
+   ordering P x y -> ordering R (compose (pro_fn f) (pro_fn g) x) (compose (pro_fn f) (pro_fn g) y).
    destruct P as [P rP tP].
    destruct Q as [Q rQ tQ].
    destruct R as [R rR tR].
@@ -85,8 +85,8 @@ Theorem comp_preserves (P Q R : PrO) (f : ProHom Q R) (g : ProHom P Q) (x y : un
    exact fxy.
 Qed.
 
-Definition comp_pro (P Q R : PrO) (f : ProHom Q R) (g : ProHom P Q) : ProHom P R
-    := cons_pro_hom P R (compose (pro_fn Q R f) (pro_fn P Q g)) (comp_preserves P Q R f g).
+Definition comp_pro (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) : PrOHom P R
+    := cons_pro_hom P R (compose (pro_fn f) (pro_fn g)) (comp_preserves P Q R f g).
 
 Instance PrOCat : Category id_pro comp_pro.
     split.
