@@ -20,6 +20,7 @@ coq:
 	coqc LinearOrder.v
 	coqc Graph.v
 	coqc GraphCat.v
+	coqc Isomorphism.v
 	cd ..
 
 clean:
