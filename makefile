@@ -21,6 +21,7 @@ coq:
 	coqc Graph.v
 	coqc GraphCat.v
 	coqc Isomorphism.v
+	coqc IsomorphismSetGrph.v
 	cd ..
 
 clean:

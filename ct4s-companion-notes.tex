@@ -138,5 +138,17 @@ A definition of isomorphism is given in \texttt{Isomorphism.v}.
 
 The definition given in \texttt{Isomorphism.v} is general enough for any category.
 
+\stepcounter{subsubsection}
+\subsubsection{Isomorphisms in \textbf{Grph} imply isomorphisms in \textbf{Set}}
+
+A proof of this fact is given as \texttt{grph\_iso\_impl\_srctgt\_iso} in \texttt{IsomorphismSetGrph.v}.
+Note how the necessary proofs just need to be extracted from the graph proof.
+
+\subsubsection{Isomorphisms in \textbf{Set} imply isomorphisms in \textbf{Grph}}
+
+A proof of this fact is given in \texttt{IsomorphismSetGrph.v}. The major portion of the
+proof is that the function on graphs given by the inverse of each of the components
+of a homorphism is in fact a homorphism. This should probably be a shorter proof,
+I need a better way of encoding diagram chase.
 
 \end{document}
