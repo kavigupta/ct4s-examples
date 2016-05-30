@@ -58,7 +58,7 @@ Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
         destruct b as [b pB].
         destruct c as [c pC].
         destruct d as [d pD].
-        rewrite (comp_assoc a b c d x y z).
+        rewrite (comp_assoc x y z).
         reflexivity.
         
         intros.
@@ -66,7 +66,7 @@ Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
         destruct a as [a pA].
         destruct b as [b pB].
         repeat autounfold in *.
-        rewrite (id_left a b f).
+        rewrite (id_left f).
         reflexivity.
         
         intros.
@@ -74,7 +74,7 @@ Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
         destruct a as [a pA].
         destruct b as [b pB].
         repeat autounfold in *.
-        rewrite (id_right a b f).
+        rewrite (id_right f).
         reflexivity.
 Qed.
 

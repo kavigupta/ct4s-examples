@@ -123,7 +123,7 @@ Instance PrOJCat : Category id_proj comp_proj.
         destruct b as [b b1 b2].
         destruct c as [c c1 c2].
         destruct d as [d d1 d2].
-        rewrite (comp_assoc a b c d x y z).
+        rewrite (comp_assoc x y z).
         trivial.
         
         intros.
@@ -132,7 +132,7 @@ Instance PrOJCat : Category id_proj comp_proj.
         destruct a as [a a1 a2].
         destruct b as [b b1 b2].
         destruct f as [f _].
-        rewrite (id_left a b f).
+        rewrite (id_left f).
         trivial.
         
         intros.
@@ -141,7 +141,7 @@ Instance PrOJCat : Category id_proj comp_proj.
         destruct a as [a a1 a2].
         destruct b as [b b1 b2].
         destruct f as [f _].
-        rewrite (id_right a b f).
+        rewrite (id_right f).
         trivial.
 Qed.        
 

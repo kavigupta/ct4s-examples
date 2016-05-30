@@ -39,7 +39,7 @@ Proof.
         destruct d as [d pD].
         unfold comp_finarrow.
         simpl.
-        exact (comp_assoc a b c d x y z).
+        exact (@comp_assoc _ _ _ _ _ a b c d x y z).
 
         intros.
         destruct a as [a pA].
@@ -49,7 +49,7 @@ Proof.
         unfold to_finarrow.
         unfold set_of.
         unfold id_set.
-        pose (id_law := id_left a b f).
+        pose (id_law := @id_left _ _ _ _ _ a b f).
         unfold id_set in id_law.
         rewrite id_law.
         trivial.
@@ -62,7 +62,7 @@ Proof.
         unfold to_finarrow.
         unfold set_of.
         unfold id_set.
-        pose (id_law := id_right a b f).
+        pose (id_law := @id_right _ _ _ _ _ a b f).
         unfold id_set in id_law.
         rewrite id_law.
         trivial.

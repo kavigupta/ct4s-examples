@@ -52,15 +52,15 @@ Theorem inverse_proof
     unfold vert_of in *; unfold arr_of in *.
     assert (compose vg (compose (compose sot_Y af) ag) = compose (compose vg (compose vf sot_X)) ag).
         rewrite proof_f.
-        pose (ca := comp_assoc _ _ _ _ ag (compose vf sot_X) vg).
+        pose (ca := comp_assoc ag (compose vf sot_X) vg).
         rewrite <- ca.
         reflexivity.
-    pose (afag := comp_assoc _ _ _ _ ag af sot_Y); rewrite <- afag in H; clear afag.
+    pose (afag := comp_assoc ag af sot_Y); rewrite <- afag in H; clear afag.
     rewrite proof_right_a in H.
-    pose (vgvf := comp_assoc _ _ _ _ sot_X vf vg); rewrite vgvf in H; clear vgvf.
+    pose (vgvf := comp_assoc sot_X vf vg); rewrite vgvf in H; clear vgvf.
     rewrite proof_left_v in H.
-    pose (sy := id_right _ _ sot_Y).
-    pose (sx := id_left _ _ sot_X).
+    pose (sy := id_right sot_Y).
+    pose (sx := id_left sot_X).
     rewrite sy in H; rewrite sx in H.
     auto.
 Qed.
