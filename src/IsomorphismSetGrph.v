@@ -12,32 +12,14 @@ Theorem grph_iso_impl_srctgt_iso {X Y : Grph}
             -> Isomorphism FunCat (vert_of X) (vert_of Y) (vert_fn f) (vert_fn g)
                 /\ Isomorphism FunCat (arr_of X) (arr_of Y) (arr_fn f) (arr_fn g).
     intro iso.
+    destruct f as [vf af]; destruct g as [vg ag].
     destruct iso as [proof_left proof_right].
-    assert (vert_fn (id_grph X) = vert_fn (id_grph X)).
-         reflexivity.
-    pattern (id_grph X) at 1 in H.
-    rewrite <- proof_left in H.
-    rename H into proof_left_v.
-    assert (arr_fn (id_grph X) = arr_fn (id_grph X)).
-        reflexivity.
-    pattern (id_grph X) at 1 in H.
-    rewrite <- proof_left in H.
-    rename H into proof_left_a.
-    assert (vert_fn (id_grph Y) = vert_fn (id_grph Y)).
-        reflexivity.
-    pattern (id_grph Y) at 1 in H.
-    rewrite <- proof_right in H.
-    rename H into proof_right_v.
-    assert (arr_fn (id_grph Y) = arr_fn (id_grph Y)).
-        reflexivity.
-    pattern (id_grph Y) at 1 in H.
-    rewrite <- proof_right in H.
-    rename H into proof_right_a.
-    destruct X as [Vx Ax X].
-    destruct Y as [Vy Ay Y].
+    unfold comp_grph in *; unfold id_grph in *.
+    simpl in *.
+    inversion proof_left; inversion proof_right.
     split.
-        exact (cons_iso FunCat Vx Vy (vert_fn f) (vert_fn g) proof_left_v proof_right_v).
-        exact (cons_iso FunCat Ax Ay (arr_fn f) (arr_fn g) proof_left_a proof_right_a).
+        split. auto. auto.
+        split. auto. auto.
 Qed.
 
 Definition src_or_tgt (is_src : bool) :=
@@ -54,77 +36,32 @@ Theorem inverse_proof
     destruct isoV as [proof_left_v proof_right_v].
     destruct isoA as [proof_left_a proof_right_a].
     destruct f as [vf af proof_src_f proof_tgt_f].
-    Hint Unfold arr_fn vert_fn comp_fn.
-    repeat autounfold in *.
-    pose (lhs := compose (src_or_tgt is_src X) ag).
-    assert ((fun x : arr_of Y => src_or_tgt is_src X (ag x)) = lhs).
-        auto.
-    rewrite H.
-    pose (rhs := compose vg (src_or_tgt is_src Y)).
-    assert ((fun x : arr_of Y => vg (src_or_tgt is_src Y x)) = rhs).
-        trivial.
-    rewrite H0.
-    clear H H0.
-    assert (compose lhs af = compose lhs af).
-        reflexivity.
-    unfold lhs at 1 in H.
-    unfold compose at 1 2 in H.
-    fold (compose ag af) in proof_left_a.
-    fold (compose vg vf) in proof_left_v.
-    fold (compose vf vg) in proof_right_v.
-    fold (compose af ag) in proof_right_a.
-    fold (compose (src_or_tgt is_src X) (fun x => ag (af x))) in H.
-    fold (compose ag af) in H.
-    rewrite proof_left_a in H.
-    unfold compose at 1 in H.
-    rename H into pl.
-    assert (compose vf rhs = compose vf rhs).
-        reflexivity.
-    unfold rhs at 1 in H.
-    unfold compose at 1 2 in H.
-    fold (compose (fun x => vf (vg x)) (src_or_tgt is_src Y)) in H.
-    fold (compose vf vg) in H.
-    rewrite proof_right_v in H.
-    unfold compose at 1 in H.
-    assert ((fun x : arr_of X => src_or_tgt is_src X x) = src_or_tgt is_src X).
-        auto.
-    rewrite H0 in pl.
-    assert ((fun x : arr_of Y => src_or_tgt is_src Y x) = src_or_tgt is_src Y).
-        auto.
-    rewrite H1 in H.
-    clear H0 H1.
-    assert ((fun x : arr_of X => src_or_tgt is_src Y (af x)) =
-              (fun x : arr_of X => vf (src_or_tgt is_src X x))).
-        unfold src_or_tgt.
+    destruct X as [VX AX Xgraph]; destruct Y as [VY AY Ygraph].
+    pose (sot_X := src_or_tgt is_src (grph VX AX Xgraph)).
+    fold sot_X.
+    pose (sot_Y := src_or_tgt is_src (grph VY AY Ygraph)).
+    fold sot_Y.
+    unfold vert_fn in *; unfold arr_fn in *.
+    assert (compose sot_Y af = compose vf sot_X).
+        unfold sot_Y; unfold sot_X; unfold src_or_tgt.
         case is_src.
             exact proof_src_f.
             exact proof_tgt_f.
-    rename H0 into proof_f.
-    rewrite H in proof_f.
-    rewrite pl in proof_f.
-    rename proof_f into w.
-    pose (u := eq_refl (compose (fun x : arr_of X => compose vf rhs (af x)) ag)).
-    pattern (fun x : arr_of X => compose vf rhs (af x)) at 1 in u.
-    rewrite w in u.
-    pose (v := eq_refl (compose vg (compose (fun x : arr_of X => vf (compose lhs af x)) ag))).
-    pattern (compose (fun x : arr_of X => vf (compose lhs af x)) ag) at 1 in v.
-    rewrite u in v.
-    unfold compose in v.
-    fold (compose (fun x => vg (vf x)) (fun x => lhs (af (ag x)))) in v.
-    fold (compose (fun x => vg (vf x)) (fun x => rhs (af (ag x)))) in v.
-    fold (compose vg vf) in v.
-    fold (compose rhs (fun x => af (ag x))) in v.
-    fold (compose lhs (fun x => af (ag x))) in v.
-    fold (compose af ag) in v.
-    rewrite proof_left_v in v.
-    rewrite proof_right_a in v.
-    unfold compose in v.
-    assert ((fun x : arr_of Y => rhs x) = rhs).
-        trivial.
-    rewrite H0 in v.
-    assert ((fun x : arr_of Y => lhs x) = lhs).
-        trivial.
-    rewrite H1 in v.
+    rename H into proof_f.
+    clear proof_src_f proof_tgt_f.
+    unfold vert_of in *; unfold arr_of in *.
+    assert (compose vg (compose (compose sot_Y af) ag) = compose (compose vg (compose vf sot_X)) ag).
+        rewrite proof_f.
+        pose (ca := comp_assoc _ _ _ _ ag (compose vf sot_X) vg).
+        rewrite <- ca.
+        reflexivity.
+    pose (afag := comp_assoc _ _ _ _ ag af sot_Y); rewrite <- afag in H; clear afag.
+    rewrite proof_right_a in H.
+    pose (vgvf := comp_assoc _ _ _ _ sot_X vf vg); rewrite vgvf in H; clear vgvf.
+    rewrite proof_left_v in H.
+    pose (sy := id_right _ _ sot_Y).
+    pose (sx := id_left _ _ sot_X).
+    rewrite sy in H; rewrite sx in H.
     auto.
 Qed.
 
