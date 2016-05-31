@@ -94,3 +94,6 @@ Instance MonCat : Category
         destruct f as [f z p].
         trivial.
 Qed.
+
+Definition OMonCat : Cat :=
+    cons_cat Mon Mon_Hom id_mon comp_mon MonCat.

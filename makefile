@@ -30,6 +30,7 @@ coq:
 	coqc IsomorphismSetGrph.v
 	coqc Equivalence.v
 	coqc IsoEquiv.v
+	coqc MonCoqFun.v
 	cd ..
 
 clean:

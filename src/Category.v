@@ -13,7 +13,7 @@ Class Category {O : Type} {M : O -> O -> Type}
         id_right : forall {a b : O} (f : M a b), comp f id = f
     }.
 
-Instance FunCat : Category
+Instance CoqCat : Category
         (@id)
         (@compose).
     split.
@@ -41,3 +41,6 @@ Definition id_of (c : Cat) : forall {x : ob c}, morph c x x :=
 Definition comp_of (c : Cat) : forall {x y z : ob c}, 
         morph c y z -> morph c x y -> morph c x z :=
     match c with cons_cat _ _ _ c _ => c end.
+
+Definition OCoqCat : Cat :=
+    cons_cat Type arrow (@id) (@compose) CoqCat.

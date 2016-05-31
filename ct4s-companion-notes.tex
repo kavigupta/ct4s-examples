@@ -48,7 +48,7 @@ distinct, and the one on the left is in a smaller universe.
 \subsubsection{The category \textbf{Set}}
 
 In Coq, it is more natural to use types rather than sets as a model category, but
-they are fairly similar: \see{Category.v}{Instance FunCat}. Notice that the proof
+they are fairly similar: \see{Category.v}{Instance CoqCat}. Notice that the proof
 is trivial in all three cases.
 
 However, we can in fact implement Categories for \textbf{Set}, although it ends
@@ -163,9 +163,15 @@ of categories as data structures. This definition is given in \texttt{Category.v
 
 \subsection{Functors}
 
-\subsubsection {Definition of Functors}
+\subsubsection{Definition of Functors}
 
 A definition of functors is given in \texttt{Functor.v}.
 
+\subsubsection{$\mathbf{Mon} \to \mathbf{Coq}$}
+
+Instead of a function from monoids to sets, we can map monoids to their underlying types, because
+of our usage of \textbf{Coq} rather than \textbf{Set}. An implementation is provided
+in \texttt{MonCoqFun.v}, and the corresponding \textbf{Cat} objects are provided in \texttt{Monoid.v}
+and \texttt{Category.v}.
 
 \end{document}

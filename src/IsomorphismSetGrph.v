@@ -9,8 +9,8 @@ Require Import Coq.Logic.FunctionalExtensionality.
 Theorem grph_iso_impl_srctgt_iso {X Y : Grph}
     (f : GrphHom X Y) (g : GrphHom Y X)
         : Isomorphism GrphCat X Y f g
-            -> Isomorphism FunCat (vert_of X) (vert_of Y) (vert_fn f) (vert_fn g)
-                /\ Isomorphism FunCat (arr_of X) (arr_of Y) (arr_fn f) (arr_fn g).
+            -> Isomorphism CoqCat (vert_of X) (vert_of Y) (vert_fn f) (vert_fn g)
+                /\ Isomorphism CoqCat (arr_of X) (arr_of Y) (arr_fn f) (arr_fn g).
     intro iso.
     destruct f as [vf af]; destruct g as [vg ag].
     destruct iso as [proof_left proof_right].
@@ -30,8 +30,8 @@ Theorem inverse_proof
     (f : GrphHom X Y)
     (is_src : bool)
     (vg : vert_of Y -> vert_of X) (ag : arr_of Y -> arr_of X)
-    (isoV : Isomorphism FunCat (vert_of X) (vert_of Y) (vert_fn f) vg)
-    (isoA : Isomorphism FunCat (arr_of X) (arr_of Y) (arr_fn f) ag)
+    (isoV : Isomorphism CoqCat (vert_of X) (vert_of Y) (vert_fn f) vg)
+    (isoA : Isomorphism CoqCat (arr_of X) (arr_of Y) (arr_fn f) ag)
         : compose (src_or_tgt is_src X) ag = compose vg (src_or_tgt is_src Y).
     destruct isoV as [proof_left_v proof_right_v].
     destruct isoA as [proof_left_a proof_right_a].
@@ -68,8 +68,8 @@ Qed.
 Theorem srctgt_iso_impl_graph_iso {X Y : Grph}
     (f : GrphHom X Y)
     (vg : vert_of Y -> vert_of X) (ag : arr_of Y -> arr_of X)
-    (isoV : Isomorphism FunCat (vert_of X) (vert_of Y) (vert_fn f) vg)
-    (isoA : Isomorphism FunCat (arr_of X) (arr_of Y) (arr_fn f) ag)
+    (isoV : Isomorphism CoqCat (vert_of X) (vert_of Y) (vert_fn f) vg)
+    (isoA : Isomorphism CoqCat (arr_of X) (arr_of Y) (arr_fn f) ag)
             : Isomorphism GrphCat X Y
                 f
                 (grph_hom Y X vg ag
