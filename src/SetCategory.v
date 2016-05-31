@@ -6,95 +6,83 @@ Require Import Coq.Logic.Classical_Prop.
 Require Import category.
 
 
-Inductive setarrow (U : Type) (X Y : Ensemble U) : Type
-        :=
-    | createarrow (f : U -> U) (proof : forall x : U, In U X x -> In U Y (f x)).
+Inductive set_hom {U : Type} (X Y : Ensemble U) : Type :=
+    cons_set_hom (f : U -> U) (proof : forall x : U, In U X x -> In U Y (f x)).
 
-Definition id_set_fn (U : Type) (u : U) : U := u.
+Definition set_hom_fn {U : Type} {X Y : Ensemble U} (hom : set_hom X Y) : U -> U :=
+    match hom with cons_set_hom f _ => f end.
 
-Theorem id_set_works : forall (U : Type) (X : Ensemble U) (x : U), In U X x -> In U X ((id_set_fn U) x).
+Theorem set_hom_eq {U : Type} {X Y : Ensemble U} (f g : set_hom X Y) : set_hom_fn f = set_hom_fn g -> f = g.
+    destruct f as [f pF]; destruct g as [g pG].
+    simpl.
+    intro H.
+    subst f.
+    assert (pF = pG).
+        apply proof_irrelevance.
+    rewrite H.
+    reflexivity.
+Qed.
+
+Definition id_set_fn {U : Type} (u : U) : U := u.
+
+Theorem id_set_works : forall {U : Type} {X : Ensemble U} (x : U), In U X x -> In U X (id_set_fn x).
 Proof.
     trivial.
 Qed.
 
-Definition id_set (U : Type) (X : Ensemble U) : setarrow U X X
-    := createarrow U X X (id_set_fn U) (id_set_works U X).
+Definition id_set {U : Type} (X : Ensemble U) : set_hom X X
+    := cons_set_hom X X id_set_fn id_set_works.
 
 Theorem comp_set_works :
-    forall (U : Type)
-    (X Y Z : Ensemble U)
+    forall {U : Type}
+    {X Y Z : Ensemble U}
     (f g : U -> U),
     (forall y, In U Y y -> In U Z (f y))
         -> (forall x, In U X x -> In U Y (g x))
         -> (forall x, In U X x -> In U Z (f (g x))).
 Proof.
-intros U X Y Z f g.
-unfold In.
-intros pG pF.
-intros x.
-intros pX.
-exact (pG (g x) (pF x pX)).
+    unfold In in *.
+    intuition.
 Qed.
 
 Definition comp_set
-        (U : Type) (X Y Z: Ensemble U)
-        (f : setarrow U Y Z) (g : setarrow U X Y)
-            : setarrow U X Z
+        {U : Type} {X Y Z: Ensemble U}
+        (f : set_hom Y Z) (g : set_hom X Y)
+            : set_hom X Z
     := match f with
-        | createarrow f' pf =>
+        | cons_set_hom f' pf =>
             match g with
-                | createarrow g' pg =>
-                    createarrow U X Z (fun (x : U) => f' (g' x)) (comp_set_works U X Y Z f' g' pf pg)
+                | cons_set_hom g' pg =>
+                    cons_set_hom X Z (fun (x : U) => f' (g' x)) (comp_set_works f' g' pf pg)
                 end
        end.
 
-Instance SetCat (U : Type) : Category (id_set U) (comp_set U).
+Instance SetCat (U : Type) : Category id_set (@comp_set U).
 Proof.
+    Hint Unfold comp_set set_hom_fn id_set id_set_fn.
     split.
         (*composition*)
         intros A B C D.
         intros h g f.
+        apply set_hom_eq.
         destruct f as [f pF].
         destruct g as [g pG].
         destruct h as [h pH].
-        unfold comp_set.
-        remember (comp_set_works U A C D f (fun x : U => g (h x)) pF (comp_set_works U A B C g h pG pH)) as p1.
-        remember (comp_set_works U A B D (fun x : U => f (g x)) h (comp_set_works U B C D f g pF pG) pH) as p2.
-        assert (p1 = p2).
-            simpl in p1.
-            simpl in p2.
-            apply proof_irrelevance.
-        rewrite H.
+        repeat autounfold.
+        simpl.
         trivial.
 
         (*left identity*)
         intros A B f.
+        apply set_hom_eq.
         destruct f as [f pF].
-        unfold comp_set.
-        unfold id_set.
-        unfold id_set_fn.
-        remember (fun x : U => f x) as f2.
-        remember (comp_set_works U A B B (fun u : U => u) f2 (id_set_works U B) pF) as pFL.
-        assert ((forall x : U, In U A x -> In U B ((fun u : U => u) (f2 x))) = forall x : U, In U A x -> In U B (f2 x)).
-            trivial.
-        assert (pFL = pF).
-            apply proof_irrelevance.
-        rewrite H0.
-        trivial.
+        repeat autounfold.
+        auto.
 
         (*right identity*)
         intros A B f.
+        apply set_hom_eq.
         destruct f as [f pF].
-        unfold comp_set.
-        unfold id_set.
-        unfold id_set_fn.
-        remember (fun x : U => f x) as f2.
-        remember (comp_set_works U A A B f2 (fun u : U => u) pF (id_set_works U A)) as pFl.
-        assert ((forall x : U, In U A x -> In U B (f2 ((fun u : U => u) x))) = forall x : U, In U A x -> In U B (f2 x)).
-            unfold iff.
-            split.
-        assert (pFl = pF).
-            apply proof_irrelevance.
-        rewrite H0.
-        trivial.
+        repeat autounfold.
+        auto.
 Qed.
