@@ -30,8 +30,7 @@ coq:
 	coqc IsomorphismSetGrph.v
 	coqc Equivalence.v
 	coqc IsoEquiv.v
-	coqc MonCoqFun.v
-	coqc GrpMonFun.v
+	coqc Forgetful.v
 	cd ..
 
 clean:
