@@ -61,9 +61,8 @@ it hopefully more easily resolved.}
 
 We can create \textbf{Fin} by requiring sets to be finite. An implementation is
 provided in \texttt{FinCategory.v}. Because the difference between \textbf{Set}
-and \textbf{Fin} is entirely a result of a restriction on the objects, the proofs
-here are almost entirely structural, we just unfold all the \textbf{Fin}--specific
-stuff and then apply the \textbf{Set} laws.
+and \textbf{Fin} is entirely a result of a restriction on the objects, we can implement
+this in terms of a Full subcategory, which we define in \texttt{FullSubcat.v}.
 
 \subsubsection{The category \textbf{Mon}}
 
@@ -150,5 +149,12 @@ A proof of this fact is given in \texttt{IsomorphismSetGrph.v}. The major portio
 proof is that the function on graphs given by the inverse of each of the components
 of a homorphism is in fact a homorphism. This should probably be a shorter proof,
 I need a better way of encoding diagram chase.
+
+\subsubsection{Isomorphisms as an equivalence relation}
+
+A definition of equivalence is given in \texttt{Equivalence.v}. An implementation
+of isomorphism as equivalence is given in \texttt{IsoEquiv.v}. Note that the proof
+is fairly simple, relying on a few fairly simple diagtram chases.
+
 
 \end{document}

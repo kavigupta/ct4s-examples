@@ -1,6 +1,8 @@
 .ONESHELL:
 filename = ct4s-companion-notes
 
+target: coq clean notes
+
 notes:
 	pdflatex $(filename).tex
 	rm $(filename).log $(filename).aux
@@ -22,6 +24,8 @@ coq:
 	coqc GraphCat.v
 	coqc Isomorphism.v
 	coqc IsomorphismSetGrph.v
+	coqc Equivalence.v
+	coqc IsoEquiv.v
 	cd ..
 
 clean:
