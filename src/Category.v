@@ -42,5 +42,8 @@ Definition comp_of (c : Cat) : forall {x y z : ob c},
         morph c y z -> morph c x y -> morph c x z :=
     match c with cons_cat _ _ _ c _ => c end.
 
+Definition cat_of (c : Cat) : Category (@id_of c) (@comp_of c) :=
+    match c with cons_cat _ _ _ _ ca => ca end.
+
 Definition OCoqCat : Cat :=
     cons_cat Type arrow (@id) (@compose) CoqCat.

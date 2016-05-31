@@ -86,3 +86,6 @@ Proof.
         repeat autounfold.
         auto.
 Qed.
+
+Definition OSetCat (U : Type) : Cat :=
+    cons_cat (Ensemble U) set_hom id_set (@comp_set U) (SetCat U).

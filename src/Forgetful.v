@@ -3,6 +3,10 @@ Require Import Monoid.
 Require Import MonCat.
 Require Import Group.
 Require Import Functor.
+Require Import FullSubcat.
+Require Import SetCategory.
+Require Import FinCategory.
+Require Import Coq.Sets.Finite_sets.
 
 Definition MonCoqFun : Functor OMonCat OCoqCat.
    refine(cons_functor OMonCat OCoqCat undertype_mon mon_hom_fn _ _).
@@ -26,3 +30,13 @@ Definition GrpMonFun : Functor OGrpCat OMonCat.
     repeat autounfold; reflexivity.
 Defined.
 
+Definition FullSubcatFun (cat : Cat) (filter : ob cat -> Prop) : Functor (full_subcat cat filter) cat.
+    refine (cons_functor (full_subcat cat filter) cat extract_ob extract_morph _ _).
+    Hint Unfold id_of comp_of superid_of extract_ob extract_morph full_subcat Category.id_of Category.comp_of.
+    repeat autounfold; reflexivity.
+    intros. destruct cat; destruct f as [f]; destruct g as [g]. repeat autounfold; reflexivity.
+Qed.
+
+Definition FinSetFun (U : Type) : Functor (OFinCat U) (OSetCat U) :=
+    FullSubcatFun (OSetCat U) (Finite U).
+    

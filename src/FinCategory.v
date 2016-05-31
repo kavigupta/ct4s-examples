@@ -21,3 +21,6 @@ Definition comp_fin (U : Type) := comp_of (FinSub U).
 
 Definition FinCat (U : Type) : Category (id_fin U) (comp_fin U) :=
     SubCat (FinSub U).
+
+Definition OFinCat (U : Type) : Cat :=
+    cons_cat (Fin U) (FinHom U) (id_fin U) (comp_fin U) (FinCat U).

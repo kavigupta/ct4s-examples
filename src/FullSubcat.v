@@ -27,6 +27,10 @@ Inductive morphism_of (fsc : FullSubcat) (x y : object_of fsc) : Type :=
     submorph (value : supermorphism_of fsc (extract_ob x) (extract_ob y))
            : morphism_of fsc x y.
 
+Definition extract_morph {fsc : FullSubcat} (x y : object_of fsc) (f : morphism_of fsc x y)
+        : supermorphism_of fsc (extract_ob x) (extract_ob y)
+    := match f with submorph f' => f' end.
+
 Definition superid_of (fsc : FullSubcat) : forall (x : superobject_of fsc), supermorphism_of fsc x x :=
     match fsc with cons_full_subcat _ _ id' _ _ _ => id' end.
 
@@ -70,4 +74,6 @@ Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
         reflexivity.
 Qed.
 
-
+Definition full_subcat (c : Cat) (filter : ob c -> Prop) : Cat :=
+    let fsc := cons_full_subcat (ob c) (morph c) (@Category.id_of c) (@Category.comp_of c) (cat_of c) filter in
+        cons_cat (object_of fsc) (morphism_of fsc) (id_of fsc) (comp_of fsc) (SubCat fsc).
