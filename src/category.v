@@ -21,3 +21,10 @@ Instance FunCat : Category
         trivial.
         trivial.
 Qed.
+
+Inductive Cat :=
+    cons_cat
+        (O : Type) {M : O -> O -> Type}
+        (id : forall {x : O}, M x x)
+        (comp : forall {a b c : O}, M b c -> M a b -> M a c)
+        (is_category : Category (@id) (@comp)) : Cat.
