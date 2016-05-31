@@ -24,7 +24,20 @@ Qed.
 
 Inductive Cat :=
     cons_cat
-        (O : Type) {M : O -> O -> Type}
+        (O : Type) (M : O -> O -> Type)
         (id : forall {x : O}, M x x)
         (comp : forall {a b c : O}, M b c -> M a b -> M a c)
         (is_category : Category (@id) (@comp)) : Cat.
+
+Definition ob (c : Cat) :=
+    match c with cons_cat o _ _ _ _ => o end.
+
+Definition morph (c : Cat) : ob c -> ob c -> Type :=
+    match c with cons_cat _ m _ _ _ => m end.
+
+Definition id_of (c : Cat) : forall {x : ob c}, morph c x x :=
+    match c with cons_cat _ _ i _ _ => i end.
+
+Definition comp_of (c : Cat) : forall {x y z : ob c}, 
+        morph c y z -> morph c x y -> morph c x z :=
+    match c with cons_cat _ _ _ c _ => c end.

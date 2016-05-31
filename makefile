@@ -1,7 +1,10 @@
 .ONESHELL:
 filename = ct4s-companion-notes
 
-target: coq clean notes
+target:
+	make coq
+	make clean
+	make notes
 
 notes:
 	pdflatex $(filename).tex
@@ -10,6 +13,7 @@ notes:
 coq:
 	cd src
 	coqc Category.v
+	coqc Functor.v
 	coqc FullSubcat.v
 	coqc SetCategory.v
 	coqc FinCategory.v
