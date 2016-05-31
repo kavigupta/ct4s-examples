@@ -1,5 +1,5 @@
 
-Require Import category.
+Require Import Category.
 
 Inductive FullSubcat : Type :=
     cons_full_subcat (O : Type) (M : O -> O -> Type)
@@ -27,18 +27,18 @@ Inductive morphism_of (fsc : FullSubcat) (x y : object_of fsc) : Type :=
     submorph (value : supermorphism_of fsc (extract_ob x) (extract_ob y))
            : morphism_of fsc x y.
 
-Definition superid_of (fsc : FullSubcat) : forall (x : superobject_of fsc), supermorphism_of fsc x x := 
+Definition superid_of (fsc : FullSubcat) : forall (x : superobject_of fsc), supermorphism_of fsc x x :=
     match fsc with cons_full_subcat _ _ id' _ _ _ => id' end.
 
 Definition id_of (fsc : FullSubcat) (X : object_of fsc) : morphism_of fsc X X :=
     submorph fsc X X (superid_of fsc (extract_ob X)).
 
-Definition supercomp_of (fsc : FullSubcat) : forall (x y z : superobject_of fsc), 
+Definition supercomp_of (fsc : FullSubcat) : forall (x y z : superobject_of fsc),
         supermorphism_of fsc y z -> supermorphism_of fsc x y -> supermorphism_of fsc x z :=
     match fsc with cons_full_subcat _ _ _ com _ _ => com end.
 
 Definition comp_of (fsc : FullSubcat)
-            (X Y Z : object_of fsc) (f : morphism_of fsc Y Z) (g : morphism_of fsc X Y) : 
+            (X Y Z : object_of fsc) (f : morphism_of fsc Y Z) (g : morphism_of fsc X Y) :
         morphism_of fsc X Z :=
     match f with submorph f' =>
         match g with
@@ -56,13 +56,13 @@ Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
         repeat autounfold in *.
         rewrite comp_assoc.
         reflexivity.
-        
+
         intros.
         destruct f as [f].
         repeat autounfold in *.
         rewrite id_left.
         reflexivity.
-        
+
         intros.
         destruct f as [f].
         repeat autounfold in *.

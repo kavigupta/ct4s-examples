@@ -1,5 +1,5 @@
 
-Require Import category.
+Require Import Category.
 Require Import Isomorphism.
 Require Import Graph.
 Require Import GraphCat.
@@ -8,7 +8,7 @@ Require Import Coq.Logic.FunctionalExtensionality.
 
 Theorem grph_iso_impl_srctgt_iso {X Y : Grph}
     (f : GrphHom X Y) (g : GrphHom Y X)
-        : Isomorphism GrphCat X Y f g 
+        : Isomorphism GrphCat X Y f g
             -> Isomorphism FunCat (vert_of X) (vert_of Y) (vert_fn f) (vert_fn g)
                 /\ Isomorphism FunCat (arr_of X) (arr_of Y) (arr_fn f) (arr_fn g).
     intro iso.
@@ -84,14 +84,14 @@ Theorem srctgt_iso_impl_graph_iso {X Y : Grph}
         apply grph_hom_eq.
             repeat autounfold; repeat autounfold in fv.
             exact fv.
-            
+
             repeat autounfold; repeat autounfold in fa.
             exact fa.
         apply grph_hom_eq.
             repeat autounfold; repeat autounfold in gv.
             exact gv.
-            
+
             repeat autounfold; repeat autounfold in ga.
             exact ga.
 Qed.
-        
+

@@ -1,7 +1,7 @@
 
 
 Require Import Graph.
-Require Import category.
+Require Import Category.
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.Classical_Prop.
 
@@ -25,7 +25,7 @@ Inductive GrphHom (X Y : Grph) : Type :=
         (vert_fn : vert_of X -> vert_of Y)
         (arr_fn : arr_of X -> arr_of Y)
         (proof_src : compose (src_of Y) arr_fn = compose vert_fn (src_of X))
-        (proof_tgt : compose (tgt_of Y) arr_fn = compose vert_fn (tgt_of X)) 
+        (proof_tgt : compose (tgt_of Y) arr_fn = compose vert_fn (tgt_of X))
             : GrphHom X Y.
 
 Definition vert_fn {X Y : Grph} (g : GrphHom X Y) : vert_of X -> vert_of Y :=
@@ -34,7 +34,7 @@ Definition vert_fn {X Y : Grph} (g : GrphHom X Y) : vert_of X -> vert_of Y :=
 Definition arr_fn {X Y : Grph} (g : GrphHom X Y) : arr_of X -> arr_of Y :=
     match g with grph_hom _ a _ _ => a end.
 
-Theorem grph_hom_eq {X Y : Grph} {f g : GrphHom X Y} : 
+Theorem grph_hom_eq {X Y : Grph} {f g : GrphHom X Y} :
     vert_fn f = vert_fn g -> arr_fn f = arr_fn g -> f = g.
         intros proof_v proof_a.
         destruct f as [vf af psf ptf].
@@ -103,25 +103,25 @@ Instance GrphCat : Category id_grph comp_grph.
         apply grph_hom_eq.
             repeat autounfold.
             reflexivity.
-            
+
             repeat autounfold.
             reflexivity.
-        
+
         intros.
         apply grph_hom_eq.
             repeat autounfold.
             reflexivity.
-            
+
             repeat autounfold.
             reflexivity.
-        
+
         intros.
         apply grph_hom_eq.
             repeat autounfold. reflexivity.
             repeat autounfold. reflexivity.
 Qed.
-            
-        
-        
-        
+
+
+
+
 

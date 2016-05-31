@@ -1,6 +1,6 @@
 
 Require Import Preorder.
-Require Import category.
+Require Import Category.
 
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.Classical_Prop.
@@ -80,7 +80,7 @@ Definition comp_proj_subs {P Q R : PrOJ} (f : PrOJHom Q R) (g : PrOJHom P Q) : P
 
 Theorem comp_preserves_joins
     {P Q R : PrOJ} (f : PrOJHom Q R) (g : PrOJHom P Q)
-        : preserves_joins (comp_pro (underpro P) (underpro Q) (underpro R) (proj_hom f) (proj_hom g)). 
+        : preserves_joins (comp_pro (underpro P) (underpro Q) (underpro R) (proj_hom f) (proj_hom g)).
     destruct P as [P jP instP].
     destruct Q as [Q jQ instQ].
     destruct R as [R jR instR].
@@ -125,7 +125,7 @@ Instance PrOJCat : Category id_proj comp_proj.
         destruct d as [d d1 d2].
         rewrite (comp_assoc x y z).
         trivial.
-        
+
         intros.
         apply proj_hom_eq.
         repeat autounfold.
@@ -134,7 +134,7 @@ Instance PrOJCat : Category id_proj comp_proj.
         destruct f as [f _].
         rewrite (id_left f).
         trivial.
-        
+
         intros.
         apply proj_hom_eq.
         repeat autounfold.
@@ -143,5 +143,5 @@ Instance PrOJCat : Category id_proj comp_proj.
         destruct f as [f _].
         rewrite (id_right f).
         trivial.
-Qed.        
+Qed.
 

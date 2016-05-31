@@ -1,7 +1,7 @@
 
 Require Import Isomorphism.
 Require Import Equivalence.
-Require Import category.
+Require Import Category.
 
 Instance IsoEq
     {O : Type} {M : O -> O -> Type}
@@ -13,13 +13,13 @@ Instance IsoEq
         intro x.
         exists (id x); exists (id x).
         split; apply id_left.
-        
+
         intros x y H.
         destruct H as [f [g H]].
         inversion H.
         exists g; exists f.
         split; auto.
-        
+
         intros x y z H1 H2.
         destruct H1 as [f1 [g1 H1]].
         destruct H2 as [f2 [g2 H2]].
@@ -32,7 +32,7 @@ Instance IsoEq
         rewrite proof_left0.
         rewrite id_right.
         auto.
-        
+
         rewrite (comp_assoc g2 g1 (comp _ _ _ f2 f1)). rewrite <- (comp_assoc g1 f1 f2).
         rewrite proof_right.
         rewrite id_right.

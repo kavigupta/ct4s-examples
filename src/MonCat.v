@@ -1,6 +1,6 @@
 Require Import Coq.Program.Basics.
 
-Require Import category.
+Require Import Category.
 Require Import Monoid.
 
 Theorem mon_id_zero (M : Type) (m : M) : id m = m.
@@ -54,7 +54,7 @@ Definition comp_mon (M N P : Mon)
     (f : Mon_Hom N P)
     (g : Mon_Hom M N)
         : Mon_Hom M P
-    := 
+    :=
         match f with
             mon_hom ff zf pf =>
                 match g with
@@ -77,7 +77,7 @@ Instance MonCat : Category
         destruct y as [y yZ yP].
         destruct x as [x xZ xP].
         trivial.
-        
+
         intros.
         apply mon_hom_eq.
         unfold comp_mon.
@@ -85,7 +85,7 @@ Instance MonCat : Category
         destruct f as [f z p].
         unfold mon_hom_fn.
         trivial.
-        
+
         intros.
         apply mon_hom_eq.
         unfold comp_mon.

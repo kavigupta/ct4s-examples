@@ -1,6 +1,6 @@
 Require Import Monoid.
 Require Import MonCat.
-Require Import category.
+Require Import Category.
 
 Class Group (M : Mon)
         (inv : undertype_mon M -> undertype_mon M)
@@ -114,7 +114,7 @@ Instance GrpCat : Category
             apply comp_assoc.
         rewrite H.
         reflexivity.
-        
+
         intros.
         destruct a as [a aI aG].
         destruct b as [b bI bG].
@@ -127,7 +127,7 @@ Instance GrpCat : Category
             apply id_left.
         rewrite H.
         reflexivity.
-        
+
         intros.
         destruct a as [a aI aG].
         destruct b as [b bI bG].

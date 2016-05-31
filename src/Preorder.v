@@ -3,7 +3,7 @@ Require Import Coq.Arith.Le.
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.Classical_Prop.
 
-Require Import category.
+Require Import Category.
 
 Class Preorder {O : Type} {M : O -> O -> Prop}
         (refl : forall x : O, M x x)
@@ -56,7 +56,7 @@ Theorem pro_hom_eq (P Q : PrO) (f g : PrOHom P Q) : pro_fn f = pro_fn g -> f = g
         apply proof_irrelevance.
     rewrite H.
     trivial.
-Qed.  
+Qed.
 
 Theorem id_preserves (P : PrO) (x y : undertype_pro P) : ordering P x y -> ordering P (id x) (id y).
     unfold id.
@@ -66,7 +66,7 @@ Qed.
 Definition id_pro (P : PrO) : PrOHom P P
     := cons_pro_hom P P (fun (x : undertype_pro P) => x) (id_preserves P).
 
-Theorem comp_preserves (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) (x y : undertype_pro P) : 
+Theorem comp_preserves (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) (x y : undertype_pro P) :
    ordering P x y -> ordering R (compose (pro_fn f) (pro_fn g) x) (compose (pro_fn f) (pro_fn g) y).
    destruct P as [P rP tP].
    destruct Q as [Q rQ tQ].
@@ -98,7 +98,7 @@ Instance PrOCat : Category id_pro comp_pro.
        destruct y as [y _].
        destruct x as [x _].
        trivial.
-       
+
        intros.
        apply pro_hom_eq.
        unfold comp_pro.
@@ -108,7 +108,7 @@ Instance PrOCat : Category id_pro comp_pro.
        unfold undertype_pro.
        destruct b as [b pB].
        trivial.
-       
+
        intros.
        apply pro_hom_eq.
        unfold comp_pro.
@@ -119,5 +119,5 @@ Instance PrOCat : Category id_pro comp_pro.
        destruct a as [a pA].
        trivial.
 Qed.
-       
-       
+
+

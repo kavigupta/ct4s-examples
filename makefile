@@ -9,7 +9,7 @@ notes:
 
 coq:
 	cd src
-	coqc category.v
+	coqc Category.v
 	coqc FullSubcat.v
 	coqc SetCategory.v
 	coqc FinCategory.v

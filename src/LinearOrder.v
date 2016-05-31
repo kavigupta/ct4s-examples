@@ -1,5 +1,5 @@
 
-Require Import category.
+Require Import Category.
 Require Import FullSubcat.
 Require Import Preorder.
 

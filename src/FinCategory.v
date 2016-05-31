@@ -2,7 +2,7 @@ Require Import Coq.Sets.Ensembles.
 Require Import Coq.Sets.Finite_sets.
 
 
-Require Import category.
+Require Import Category.
 Require Import FullSubcat.
 Require Import SetCategory.
 

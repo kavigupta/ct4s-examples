@@ -3,7 +3,7 @@ Require Import Coq.Logic.FunctionalExtensionality.
 Require Import Coq.Sets.Ensembles.
 Require Import Coq.Logic.Classical_Prop.
 
-Require Import category.
+Require Import Category.
 
 
 Inductive set_hom {U : Type} (X Y : Ensemble U) : Type :=

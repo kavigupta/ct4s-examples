@@ -1,5 +1,5 @@
 
-Require Import category.
+Require Import Category.
 
 Inductive Isomorphism
     {O : Type} {M : O -> O -> Type}
@@ -9,7 +9,7 @@ Inductive Isomorphism
     (a b : O)
     (f : M a b) (g : M b a)
         : Prop
-    := cons_iso 
+    := cons_iso
         (proof_left : comp a b a g f = id a)
         (proof_right : comp b a b f g = id b) : Isomorphism is_category a b f g.
 
