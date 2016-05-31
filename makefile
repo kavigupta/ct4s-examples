@@ -31,6 +31,7 @@ coq:
 	coqc Equivalence.v
 	coqc IsoEquiv.v
 	coqc MonCoqFun.v
+	coqc GrpMonFun.v
 	cd ..
 
 clean:

@@ -141,3 +141,7 @@ Instance GrpCat : Category
         rewrite H.
         reflexivity.
 Qed.
+
+Definition OGrpCat : Cat :=
+    cons_cat Grp Grp_Hom id_grp comp_grp GrpCat.
+

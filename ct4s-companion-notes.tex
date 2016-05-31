@@ -172,6 +172,12 @@ A definition of functors is given in \texttt{Functor.v}.
 Instead of a function from monoids to sets, we can map monoids to their underlying types, because
 of our usage of \textbf{Coq} rather than \textbf{Set}. An implementation is provided
 in \texttt{MonCoqFun.v}, and the corresponding \textbf{Cat} objects are provided in \texttt{Monoid.v}
-and \texttt{Category.v}.
+and \texttt{Category.v}. Note how the entire proof is in unfolding a few definitions and
+asserting reflexivity.
+
+\subsubsection{$\mathbf{Grp} \to \mathbf{Mon}$}
+
+A similar transformation can be defined. We again just need to unwrap all the Group
+definitions everything reduces to reflexive relations.
 
 \end{document}
