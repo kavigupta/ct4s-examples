@@ -23,3 +23,6 @@ Definition comp_lin := comp_of LinSub.
 
 Definition LinCat : Category id_lin comp_lin :=
     SubCat LinSub.
+
+Definition OLinCat : Cat :=
+    cons_cat Lin LinHom id_lin comp_lin LinCat.

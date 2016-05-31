@@ -7,6 +7,8 @@ Require Import FullSubcat.
 Require Import SetCategory.
 Require Import FinCategory.
 Require Import Coq.Sets.Finite_sets.
+Require Import Preorder.
+Require Import LinearOrder.
 
 Definition MonCoqFun : Functor OMonCat OCoqCat.
    refine(cons_functor OMonCat OCoqCat undertype_mon mon_hom_fn _ _).
@@ -39,4 +41,6 @@ Qed.
 
 Definition FinSetFun (U : Type) : Functor (OFinCat U) (OSetCat U) :=
     FullSubcatFun (OSetCat U) (Finite U).
-    
+
+Definition LinProFun (U : Type) : Functor OLinCat OPrOCat :=
+    FullSubcatFun OPrOCat Is_Linear.

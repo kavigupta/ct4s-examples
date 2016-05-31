@@ -120,4 +120,7 @@ Instance PrOCat : Category id_pro comp_pro.
        trivial.
 Qed.
 
+Definition OPrOCat : Cat
+    := cons_cat PrO PrOHom id_pro comp_pro PrOCat.
+
 
