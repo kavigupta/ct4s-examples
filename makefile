@@ -31,6 +31,7 @@ coq:
 	coqc Equivalence.v
 	coqc IsoEquiv.v
 	coqc Forgetful.v
+	coqc ProGrphFun.v
 	cd ..
 
 clean:

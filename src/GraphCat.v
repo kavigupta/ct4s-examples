@@ -121,7 +121,7 @@ Instance GrphCat : Category id_grph comp_grph.
             repeat autounfold. reflexivity.
 Qed.
 
-
-
+Definition OGrphCat : Cat :=
+    cons_cat Grph GrphHom id_grph comp_grph GrphCat.
 
 
