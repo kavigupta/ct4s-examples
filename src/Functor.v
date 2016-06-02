@@ -14,5 +14,3 @@ Inductive Functor
                 (f : morph A y z)
                 (g : morph A x y),
                     morph_fn (comp_of A f g) = comp_of B (morph_fn f) (morph_fn g)).
-
-

@@ -1,22 +1,18 @@
 
 Require Import Coq.Logic.FunctionalExtensionality.
 Require Import Coq.Logic.Classical_Prop.
+Require Import Coq.Program.Basics.
 
 Require Import Preorder.
 Require Import Graph.
 Require Import Functor.
+Require Import Category.
 Require Import GraphCat.
+Require Import Isomorphism.
+Require Import IsomorphismSetGrph.
 
 Inductive PrOEdge (T : Type) (rel : T -> T -> Prop) :=
     cons_proedge (a b : T) (proof : rel a b).
-
-Theorem proedge_eq (T : Type) (rel : T -> T -> Prop) (a1 a2 b1 b2 : T) (proof1 : rel a1 b1) (proof2 : rel a2 b2)
-        : a1 = a2 -> b1 = b2 -> cons_proedge T rel a1 b1 proof1 = cons_proedge T rel a2 b2 proof2.
-    intros aeq beq.
-    subst a1; subst b1.
-    f_equal.
-    apply proof_irrelevance.
-Qed.
 
 Definition edge_of (p : PrO) : Type :=
     PrOEdge (undertype_pro p) (ordering p).
@@ -26,6 +22,16 @@ Definition pro_src {T : Type} {rel : T -> T -> Prop} (e : PrOEdge T rel) :=
 
 Definition pro_tgt {T : Type} {rel : T -> T -> Prop} (e : PrOEdge T rel) :=
     match e with cons_proedge _ b _ => b end.
+
+Theorem proedge_eq (T : Type) (rel : T -> T -> Prop) (a b : PrOEdge T rel)
+        : pro_src a = pro_src b -> pro_tgt a = pro_tgt b -> a = b.
+    intros seq teq.
+    destruct a; destruct b.
+    unfold pro_src in *; unfold pro_tgt in *.
+    subst a0; subst b0.
+    f_equal.
+    apply proof_irrelevance.
+Qed.
 
 Definition edge_map {P Q : PrO} (f : PrOHom P Q) (e : edge_of P) : edge_of Q.
     refine (cons_proedge (undertype_pro Q) (ordering Q) (pro_fn f (pro_src e)) (pro_fn f (pro_tgt e)) _).
@@ -83,8 +89,57 @@ Definition ProGrphFun : Functor OPrOCat OGrphCat.
             apply proedge_eq.
             reflexivity. reflexivity.
 Defined.
+
+Definition Grph_Not_In_Image : Grph :=
+    grph unit bool (graph unit bool (fun _ => tt) (fun _ => tt)).
+
+Theorem singleton_eq : forall a b : unit, a = b.
+    intros a b.
+    case a. case b.
+    reflexivity.
+Qed.
+
+Theorem iso_unit_singleton {O : Type} {f : O -> unit} {g : unit -> O}
+        : Isomorphism CoqCat O unit f g -> forall (a b : O), a = b.
+    intros H.
+    inversion H.
+    intros a b.
+    pose (eqf := singleton_eq (f a) (f b)).
+    pose (eqgf := eq_refl (g (f a))).
+    pattern (f a) at 1 in eqgf; rewrite eqf in eqgf.
+    assert (compose g f b = compose g f a).
+        unfold compose.
+        exact eqgf.
+    rewrite proof_left in H0.
+    unfold id in H0.
+    auto.
+Qed.
+
+Theorem not_in_image : forall p, not (Isomorphic GrphCat (PrOGrph p) Grph_Not_In_Image).
+    intros p H.
+    destruct p as [O M _refl _trans].
+    destruct H as [f [g H]].
+    pose (u := grph_iso_impl_srctgt_iso f g H).
+    destruct u as [proof_v proof_a].
+    clear H.
+    Hint Unfold vert_of PrOGrph Grph_Not_In_Image undertype_pro edge_of.
+    repeat autounfold in *.
+    destruct f as [vf af psf ptf].
+    destruct g as [vg ag psg ptg].
+    simpl in *.
+    clear _refl _trans psf ptf psg ptg.
+    pose (o_is_singleton := iso_unit_singleton proof_v).
+    destruct proof_a.
+    assert (ag true = ag false).
+        apply proedge_eq.
+        apply o_is_singleton. apply o_is_singleton.
+    assert (forall b, af (ag b) = b).
+        apply equal_f.
+        unfold compose in proof_right.
+        exact proof_right.
+    assert (af (ag true) = af (ag false)).
+        rewrite H; reflexivity.
+    rewrite (H0 true) in H1; rewrite (H0 false) in H1.
+    discriminate.
+Qed.
             
-            
-        
-                
-                
