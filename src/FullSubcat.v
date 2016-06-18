@@ -53,27 +53,24 @@ Definition comp_of (fsc : FullSubcat)
 Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
     destruct fsc as [o m id comp cat filter].
     Hint Unfold id_of comp_of supercomp_of supermorphism_of extract_ob superid_of.
-    split.
+    split;
+        try (
+            (*Try the left and right id cases*)
+            intros;
+            destruct f as [f];
+            repeat autounfold in *;
+            try (rewrite (id_left f));
+            try (rewrite (id_right f));
+            reflexivity
+        ).
         destruct z as [z].
         destruct y as [y].
         destruct x as [x].
         repeat autounfold in *.
         rewrite comp_assoc.
         reflexivity.
-
-        intros.
-        destruct f as [f].
-        repeat autounfold in *.
-        rewrite id_left.
-        reflexivity.
-
-        intros.
-        destruct f as [f].
-        repeat autounfold in *.
-        rewrite (id_right f).
-        reflexivity.
 Qed.
 
 Definition full_subcat (c : Cat) (filter : ob c -> Prop) : Cat :=
-    let fsc := cons_full_subcat (ob c) (morph c) (@Category.idc c) (@Category.comp c) (cat_of c) filter in
+    let fsc := cons_full_subcat (ob c) (morph c) (idc) (@comp c) (cat_of c) filter in
         cons_cat (object_of fsc) (morphism_of fsc) (id_of fsc) (comp_of fsc) (SubCat fsc).
