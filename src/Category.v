@@ -16,10 +16,7 @@ Class Category {O : Type} {M : O -> O -> Type}
 Instance CoqCat : Category
         (@id)
         (@compose).
-    split.
-        trivial.
-        trivial.
-        trivial.
+    split; trivial.
 Qed.
 
 Inductive Cat :=
@@ -35,15 +32,17 @@ Definition ob (c : Cat) :=
 Definition morph (c : Cat) : ob c -> ob c -> Type :=
     match c with cons_cat _ m _ _ _ => m end.
 
-Definition id_of (c : Cat) : forall {x : ob c}, morph c x x :=
+Definition idc {c : Cat} : forall (x : ob c), morph c x x :=
     match c with cons_cat _ _ i _ _ => i end.
 
-Definition comp_of (c : Cat) : forall {x y z : ob c}, 
+Definition comp {c : Cat} : forall {x y z : ob c}, 
         morph c y z -> morph c x y -> morph c x z :=
     match c with cons_cat _ _ _ c _ => c end.
 
-Definition cat_of (c : Cat) : Category (@id_of c) (@comp_of c) :=
+Definition cat_of (c : Cat) : Category (@idc c) (@comp c) :=
     match c with cons_cat _ _ _ _ ca => ca end.
 
 Definition OCoqCat : Cat :=
     cons_cat Type arrow (@id) (@compose) CoqCat.
+
+Notation "a ** b" := (comp a b) (at level 40, left associativity).

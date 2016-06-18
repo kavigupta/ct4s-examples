@@ -34,7 +34,7 @@ Defined.
 
 Definition FullSubcatFun (cat : Cat) (filter : ob cat -> Prop) : Functor (full_subcat cat filter) cat.
     refine (cons_functor (full_subcat cat filter) cat extract_ob extract_morph _ _).
-    Hint Unfold id_of comp_of superid_of extract_ob extract_morph full_subcat Category.id_of Category.comp_of.
+    Hint Unfold id_of comp_of superid_of extract_ob extract_morph full_subcat Category.idc Category.comp.
     repeat autounfold; reflexivity.
     intros. destruct cat; destruct f as [f]; destruct g as [g]. repeat autounfold; reflexivity.
 Qed.

@@ -75,5 +75,5 @@ Instance SubCat (fsc : FullSubcat) : Category (id_of fsc) (comp_of fsc).
 Qed.
 
 Definition full_subcat (c : Cat) (filter : ob c -> Prop) : Cat :=
-    let fsc := cons_full_subcat (ob c) (morph c) (@Category.id_of c) (@Category.comp_of c) (cat_of c) filter in
+    let fsc := cons_full_subcat (ob c) (morph c) (@Category.idc c) (@Category.comp c) (cat_of c) filter in
         cons_cat (object_of fsc) (morphism_of fsc) (id_of fsc) (comp_of fsc) (SubCat fsc).

@@ -65,9 +65,9 @@ Defined.
 Definition ProGrphFun : Functor OPrOCat OGrphCat.
     refine (cons_functor OPrOCat OGrphCat PrOGrph PrOGrphHom _ _).
         Hint Unfold PrOGrphHom PrOGrph OPrOCat OGrphCat pro_fn.
-        Hint Unfold Category.id_of Category.comp_of id_pro comp_pro edge_map pro_src pro_tgt vert_of.
+        Hint Unfold Category.idc Category.comp id_pro comp_pro edge_map pro_src pro_tgt vert_of.
         intros x.
-        rewrite (@grph_hom_eq (PrOGrph x) (PrOGrph x) (PrOGrphHom x x (Category.id_of OPrOCat)) (Category.id_of OGrphCat)).
+        rewrite (@grph_hom_eq (PrOGrph x) (PrOGrph x) (PrOGrphHom x x (@Category.idc OPrOCat x)) (@Category.idc OGrphCat _)).
             
             reflexivity.
             repeat autounfold; reflexivity.
@@ -78,7 +78,7 @@ Definition ProGrphFun : Functor OPrOCat OGrphCat.
                 apply proedge_eq. reflexivity. reflexivity.
             
         intros x y z f g.
-        rewrite (@grph_hom_eq (PrOGrph x) (PrOGrph z) (PrOGrphHom x z (Category.comp_of OPrOCat f g)) (Category.comp_of OGrphCat (PrOGrphHom y z f) (PrOGrphHom x y g))).
+        rewrite (@grph_hom_eq (PrOGrph x) (PrOGrph z) (PrOGrphHom x z (@Category.comp OPrOCat _ _ _ f g)) (@Category.comp OGrphCat _ _ _ (PrOGrphHom y z f) (PrOGrphHom x y g))).
             reflexivity.
             destruct x; destruct y; destruct z; destruct f; destruct g.
                 repeat autounfold.
