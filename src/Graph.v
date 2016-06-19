@@ -4,6 +4,8 @@ Require Import Coq.Lists.List.
 Inductive Graph (V A : Type) : Type :=
     graph (src tgt : A -> V) : Graph V A.
 
+Arguments graph {V A} src tgt.
+
 Inductive Edge (V : Type) : Type :=
     edge (src tgt : V) : Edge V.
 
@@ -27,4 +29,4 @@ Definition tgt_edge {V : Type} {edges : list (Edge V)} (edge : Edge_In_List V ed
     end.
 
 Definition EdgeList (V : Type) (edges : list (Edge V)) : Graph V (Edge_In_List V edges) :=
-    graph V (Edge_In_List V edges) src_edge tgt_edge.
+    graph src_edge tgt_edge.
