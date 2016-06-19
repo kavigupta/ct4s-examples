@@ -15,7 +15,7 @@ Definition MonCoqFun : Functor OMonCat OCoqCat.
    refine(cons_functor OMonCat OCoqCat undertype_mon (@mon_hom_fn) _ _);
    intros;
    [
-       | destruct f as [f]; destruct g as [g]
+       | destruct f as [f [a b]]; destruct g as [g [c d]]
    ];
    reflexivity.
 Defined.

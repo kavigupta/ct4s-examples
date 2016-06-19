@@ -4,7 +4,7 @@ Require Import Category.
 Require Import Monoid.
 
 Definition id_mon (M : Mon) : Mon_Hom M M.
-    refine (mon_hom M M id _ _); trivial.
+    refine (exist _ id _); split; trivial.
 Defined.
 
 Generalizable Variables M mzeroM mplusM.
@@ -46,16 +46,18 @@ Definition comp_mon {M N P : Mon}
     (g : Mon_Hom M N)
         : Mon_Hom M P.
     refine (match f with
-            mon_hom ff zf pf =>
+            exist ff (conj zf pf) =>
                 match g with
-                    mon_hom gg zg pg =>
-                        mon_hom M P (compose ff gg) _ _
+                    exist gg (conj zg pg) =>
+                        exist _ (compose ff gg) _
                 end
-        end);
-    intros;
+        end).
+    split; intros;
     unfold compose;
-    try (rewrite <- zf; rewrite <- zg);
-    try (rewrite <- pf; rewrite <- pg);
+    [
+        rewrite <- zf; rewrite <- zg |
+        rewrite <- pf; rewrite <- pg
+    ];
     reflexivity.
 Defined.
 
@@ -65,10 +67,10 @@ Instance MonCat : Category
     split;
         intros;
         apply mon_hom_eq;
-        try (destruct f; reflexivity).
-        destruct z as [z zZ zP].
-        destruct y as [y yZ yP].
-        destruct x as [x xZ xP].
+        try (destruct f as [f [zF pF]]; reflexivity).
+        destruct z as [z [zZ zP]].
+        destruct y as [y [yZ yP]].
+        destruct x as [x [xZ xP]].
         trivial.
 Qed.
 
