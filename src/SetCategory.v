@@ -6,11 +6,11 @@ Require Import Coq.Logic.Classical_Prop.
 Require Import Category.
 
 
-Inductive set_hom {U : Type} (X Y : Ensemble U) : Type :=
-    cons_set_hom (f : U -> U) (proof : forall x : U, In U X x -> In U Y (f x)).
+Definition set_hom {U : Type} (X Y : Ensemble U) : Type :=
+    {f : U -> U | forall x : U, In U X x -> In U Y (f x)}.
 
 Definition set_hom_fn {U : Type} {X Y : Ensemble U} (hom : set_hom X Y) : U -> U :=
-    match hom with cons_set_hom f _ => f end.
+    match hom with exist f _ => f end.
 
 Theorem set_hom_eq {U : Type} {X Y : Ensemble U} (f g : set_hom X Y) : set_hom_fn f = set_hom_fn g -> f = g.
     destruct f as [f pF]; destruct g as [g pG].
@@ -23,7 +23,7 @@ Theorem set_hom_eq {U : Type} {X Y : Ensemble U} (f g : set_hom X Y) : set_hom_f
 Qed.
 
 Definition id_set {U : Type} (X : Ensemble U) : set_hom X X.
-    refine (cons_set_hom X X (fun u => u) _).
+    refine (exist _ (fun u => u) _).
     trivial.
 Defined.
 
@@ -32,10 +32,10 @@ Definition comp_set
         (f : set_hom Y Z) (g : set_hom X Y)
             : set_hom X Z.
     refine (match f with
-        | cons_set_hom f' pf =>
+        | exist f' pf =>
             match g with
-                | cons_set_hom g' pg =>
-                    cons_set_hom X Z (fun (x : U) => f' (g' x)) _
+                | exist g' pg =>
+                    exist _ (fun (x : U) => f' (g' x)) _
                 end
        end).
     unfold In in *.
@@ -44,21 +44,16 @@ Defined.
 
 Instance SetCat (U : Type) : Category id_set (@comp_set U).
     Hint Unfold comp_set set_hom_fn id_set.
-    split;
+    split; intros; apply set_hom_eq;
         try (
             (*left/right identity*)
-            intros A B f;
-            apply set_hom_eq;
             destruct f;
             reflexivity
         ).
         (*composition*)
-        intros A B C D.
-        intros h g f.
-        apply set_hom_eq.
-        destruct f as [f pF].
-        destruct g as [g pG].
-        destruct h as [h pH].
+        destruct x.
+        destruct y.
+        destruct z.
         reflexivity.
 Qed.
 
