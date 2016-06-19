@@ -57,7 +57,7 @@ Definition HasPathHom (P Q : Grph) (f : GrphHom P Q) : PrOHom (HasPathO P) (HasP
 Defined.
 
 Definition HasPath : Functor OGrphCat OPrOCat.
-    Hint Unfold HasPathHom HasPathO OGrphCat OPrOCat id_of.
+    Hint Unfold HasPathHom HasPathO OGrphCat OPrOCat idc.
     refine (cons_functor OGrphCat OPrOCat HasPathO HasPathHom _ _).
         intros x.
         destruct x.
@@ -70,6 +70,92 @@ Definition HasPath : Functor OGrphCat OPrOCat.
         repeat autounfold.
         reflexivity.
 Defined.
+
+Definition from_paths_pro_to_original : forall p, PrOHom (HasPathO (PrOGrph p)) p. 
+    intros p.
+    refine (cons_pro_hom (HasPathO (PrOGrph p)) p (fun x => x) _).
+    intros x y.
+    Hint Unfold HasPathO PrOGrph vert_of undertype_pro edge_of ordering.
+    destruct p as [O M r t].
+    repeat autounfold.
+    simpl.
+    intro H.
+    induction H.
+        exact (r a).
+        
+        simpl in *.
+        destruct edge.
+        destruct proof as [px py].
+        subst a0; subst b0.
+        exact proof0.
+        
+        simpl in *.
+        exact (t _ _ _ IHhas_path1 IHhas_path2).
+Defined.
+
+Definition from_original_to_paths_pro : forall p, PrOHom p (HasPathO (PrOGrph p)).
+    intros p.
+    refine (cons_pro_hom p (HasPathO (PrOGrph p)) (fun x => x) _).
+    intros x y.
+    destruct p as [O M r t].
+    unfold HasPathO.
+    unfold PrOGrph.
+    unfold edge_of.
+    unfold undertype_pro in *.
+    unfold ordering.
+    intro H.
+    refine (@item ((grph O (PrOEdge O M) (graph O (PrOEdge O M) pro_src pro_tgt))) x y (cons_proedge _ _ _ _ H) _).
+    unfold src_of.
+    unfold tgt_of.
+    unfold pro_src.
+    unfold pro_tgt.
+    auto.
+Defined.
+
+Theorem all_pro_in_image
+    : forall (p : PrO), Isomorphic _ (HasPathO (PrOGrph p)) p.
+    intros p.
+    unfold Isomorphic.
+    exists (from_paths_pro_to_original p).
+    exists (from_original_to_paths_pro p).
+    unfold from_original_to_paths_pro.
+    unfold from_paths_pro_to_original.
+    Hint Unfold pro_fn comp_pro id_pro compose.
+    split.
+        apply pro_hom_eq.
+        repeat autounfold.
+        reflexivity.
+        
+        apply pro_hom_eq.
+        repeat autounfold.
+        reflexivity.
+Qed.
+
+Theorem all_pro_in_image2
+    : forall (p : PrO), HasPathO (PrOGrph p) = p.
+    intros p.
+    unfold HasPathO.
+    unfold PrOGrph.
+    destruct p.
+    unfold undertype_pro.
+    unfold vert_of.
+    unfold edge_of.
+    unfold ordering.
+    unfold undertype_pro.
+    pose (u := (has_path (grph O (PrOEdge O M) (graph O (PrOEdge O M) pro_src pro_tgt)))).
+    fold u.
+    unfold vert_of in u.
+    assert (u = M).
+        unfold u.
+        apply functional_extensionality.
+        intros x.
+        apply functional_extensionality.
+        intro y.
+        remember (has_path (grph O (PrOEdge O M) (graph O (PrOEdge O M) pro_src pro_tgt)) x y) as lhs.
+        
+    Print f_equal4.
+    refine (f_equal4 _ _ _ _ _).
+Qed.
 
 (**
 Theorem grph_ob_is_pro_ob : forall p, HasPathO (PrOGrph p) = p.

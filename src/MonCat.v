@@ -3,18 +3,9 @@ Require Import Coq.Program.Basics.
 Require Import Category.
 Require Import Monoid.
 
-Theorem mon_id_zero (M : Type) (m : M) : id m = m.
-    trivial.
-Qed.
-
-Theorem mon_id_assoc (M : Type) (f : M -> M -> M) (x y : M) : id (f x y) = f (id x) (id y).
-    trivial.
-Qed.
-
-Definition id_mon
-    (M : Mon)
-        : Mon_Hom M M
-    := mon_hom M M id (mon_id_zero (undertype_mon M) (mzero_of M)) (mon_id_assoc (undertype_mon M) (mplus_of M)).
+Definition id_mon (M : Mon) : Mon_Hom M M.
+    refine (mon_hom M M id _ _); trivial.
+Defined.
 
 Generalizable Variables M mzeroM mplusM.
 Generalizable Variables N mzeroN mplusN.
@@ -50,50 +41,36 @@ Theorem comp_plus_law
     trivial.
 Qed.
 
-Definition comp_mon (M N P : Mon)
+Definition comp_mon {M N P : Mon}
     (f : Mon_Hom N P)
     (g : Mon_Hom M N)
-        : Mon_Hom M P
-    :=
-        match f with
+        : Mon_Hom M P.
+    refine (match f with
             mon_hom ff zf pf =>
                 match g with
                     mon_hom gg zg pg =>
-                        mon_hom M P (compose ff gg)
-                                (comp_zero_law (monoid_of M) (monoid_of N) (monoid_of P) ff gg zf zg)
-                                (comp_plus_law (monoid_of M) (monoid_of N) (monoid_of P) ff gg pf pg)
+                        mon_hom M P (compose ff gg) _ _
                 end
-        end.
+        end);
+    intros;
+    unfold compose;
+    try (rewrite <- zf; rewrite <- zg);
+    try (rewrite <- pf; rewrite <- pg);
+    reflexivity.
+Defined.
 
 Instance MonCat : Category
         id_mon
-        comp_mon.
-    split.
-        intros.
-        apply mon_hom_eq.
-        unfold comp_mon.
-        unfold mon_hom_fn.
+        (@comp_mon).
+    split;
+        intros;
+        apply mon_hom_eq;
+        try (destruct f; reflexivity).
         destruct z as [z zZ zP].
         destruct y as [y yZ yP].
         destruct x as [x xZ xP].
         trivial.
-
-        intros.
-        apply mon_hom_eq.
-        unfold comp_mon.
-        unfold id_mon.
-        destruct f as [f z p].
-        unfold mon_hom_fn.
-        trivial.
-
-        intros.
-        apply mon_hom_eq.
-        unfold comp_mon.
-        unfold mon_hom_fn.
-        unfold id_mon.
-        destruct f as [f z p].
-        trivial.
 Qed.
 
 Definition OMonCat : Cat :=
-    cons_cat Mon Mon_Hom id_mon comp_mon MonCat.
+    cons_cat Mon Mon_Hom id_mon (@comp_mon) MonCat.
