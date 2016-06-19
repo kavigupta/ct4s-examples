@@ -5,26 +5,17 @@ Require Import Coq.Logic.Classical_Prop.
 
 Require Import Category.
 
-Class Preorder {O : Type} {M : O -> O -> Prop}
-        (refl : forall x : O, M x x)
-        (trans : forall a b c : O, M b c -> M a b -> M a c)
-            : Prop
+Class Preorder {O : Type} (M : O -> O -> Prop) : Prop
     := Build_Preorder {
-
+        refl : forall x : O, M x x;
+        trans : forall a b c : O, M b c -> M a b -> M a c
     }.
 
-Theorem nat_leq_refl (n : nat) : n <= n.
-    trivial.
-Qed.
-
-Theorem nat_leq_trans (a b c : nat) : b <= c -> a <= b -> a <= c.
+Instance PreNat : Preorder le.
+    split; trivial.
     intros.
-    apply (le_trans a b c).
-        trivial.
-        trivial.
+    apply le_trans with (m := b); assumption.
 Qed.
-
-Instance PreNat : Preorder nat_leq_refl nat_leq_trans.
 
 Inductive PrO : Type
     := cons_pro
@@ -38,13 +29,12 @@ Definition undertype_pro (P : PrO) : Type
 Definition ordering (P : PrO) : undertype_pro P -> undertype_pro P -> Prop
     := match P with cons_pro _ o _ _ => o end.
 
-Inductive PrOHom (P Q : PrO) : Type
-    := cons_pro_hom
-        (f : undertype_pro P -> undertype_pro Q)
-        (preserve : forall (x y : undertype_pro P), ordering P x y -> ordering Q (f x) (f y)).
+Definition PrOHom (P Q : PrO) : Type := 
+    {f : undertype_pro P -> undertype_pro Q
+        | forall (x y : undertype_pro P), ordering P x y -> ordering Q (f x) (f y)}.
 
 Definition pro_fn {P Q : PrO} (f : PrOHom P Q) : undertype_pro P -> undertype_pro Q
-    := match f with cons_pro_hom u _ => u end.
+    := match f with exist u _ => u end.
 
 Theorem pro_hom_eq (P Q : PrO) (f g : PrOHom P Q) : pro_fn f = pro_fn g -> f = g.
     intros H.
@@ -58,66 +48,31 @@ Theorem pro_hom_eq (P Q : PrO) (f g : PrOHom P Q) : pro_fn f = pro_fn g -> f = g
     trivial.
 Qed.
 
-Theorem id_preserves (P : PrO) (x y : undertype_pro P) : ordering P x y -> ordering P (id x) (id y).
-    unfold id.
+Definition id_pro (P : PrO) : PrOHom P P.
+    refine (exist _ (fun (x : undertype_pro P) => x) _).
     trivial.
-Qed.
+Defined.
 
-Definition id_pro (P : PrO) : PrOHom P P
-    := cons_pro_hom P P (fun (x : undertype_pro P) => x) (id_preserves P).
-
-Theorem comp_preserves (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) (x y : undertype_pro P) :
-   ordering P x y -> ordering R (compose (pro_fn f) (pro_fn g) x) (compose (pro_fn f) (pro_fn g) y).
-   destruct P as [P rP tP].
-   destruct Q as [Q rQ tQ].
-   destruct R as [R rR tR].
-   unfold ordering.
-   unfold compose.
-   unfold undertype_pro in *.
-   destruct f as [f presF].
-   destruct g as [g presG].
-   unfold pro_fn.
-   unfold undertype_pro in *.
-   unfold ordering in *.
-   intro H.
-   pose (gxy := presG x y H).
-   pose (fxy := presF (g x) (g y) gxy).
-   exact fxy.
-Qed.
-
-Definition comp_pro (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) : PrOHom P R
-    := cons_pro_hom P R (compose (pro_fn f) (pro_fn g)) (comp_preserves P Q R f g).
+Definition comp_pro (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) : PrOHom P R.
+    refine (exist _ (compose (pro_fn f) (pro_fn g)) _).
+    intros.
+    destruct P; destruct Q; destruct R.
+    destruct f as [f presF].
+    destruct g as [g presG].
+    simpl in *.
+    apply presF.
+    apply presG.
+    assumption.
+Defined.
 
 Instance PrOCat : Category id_pro comp_pro.
-    split.
-       intros.
-       apply pro_hom_eq.
-       unfold comp_pro.
-       unfold pro_fn.
-       destruct z as [z _].
-       destruct y as [y _].
-       destruct x as [x _].
-       trivial.
-
-       intros.
-       apply pro_hom_eq.
-       unfold comp_pro.
-       unfold id_pro.
-       unfold pro_fn.
-       destruct f as [f _].
-       unfold undertype_pro.
-       destruct b as [b pB].
-       trivial.
-
-       intros.
-       apply pro_hom_eq.
-       unfold comp_pro.
-       unfold id_pro.
-       unfold pro_fn.
-       destruct f as [f _].
-       unfold undertype_pro.
-       destruct a as [a pA].
-       trivial.
+    split;
+       intros;
+       apply pro_hom_eq;
+       [
+           destruct z; destruct y; destruct x; simpl in * | |
+       ];
+       reflexivity.
 Qed.
 
 Definition OPrOCat : Cat
