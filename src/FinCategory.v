@@ -17,7 +17,7 @@ Definition FinHom (U : Type) : Fin U -> Fin U -> Type :=
 
 Definition id_fin (U : Type) := id_of (FinSub U).
 
-Definition comp_fin (U : Type) := comp_of (FinSub U).
+Definition comp_fin (U : Type) := @comp_of (FinSub U).
 
 Definition FinCat (U : Type) : Category (id_fin U) (comp_fin U) :=
     SubCat (FinSub U).

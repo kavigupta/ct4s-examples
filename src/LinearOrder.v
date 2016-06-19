@@ -19,7 +19,7 @@ Definition Lin : Type := object_of LinSub.
 Definition LinHom (X Y : Lin) : Type := morphism_of LinSub X Y.
 
 Definition id_lin := id_of LinSub.
-Definition comp_lin := comp_of LinSub.
+Definition comp_lin := @comp_of LinSub.
 
 Definition LinCat : Category id_lin comp_lin :=
     SubCat LinSub.
