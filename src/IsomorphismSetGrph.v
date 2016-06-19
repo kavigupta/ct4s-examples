@@ -37,9 +37,9 @@ Theorem inverse_proof
     destruct isoA as [proof_left_a proof_right_a].
     destruct f as [vf af proof_src_f proof_tgt_f].
     destruct X as [VX AX Xgraph]; destruct Y as [VY AY Ygraph].
-    pose (sot_X := src_or_tgt is_src (grph VX AX Xgraph)).
+    pose (sot_X := src_or_tgt is_src (grph Xgraph)).
     fold sot_X.
-    pose (sot_Y := src_or_tgt is_src (grph VY AY Ygraph)).
+    pose (sot_Y := src_or_tgt is_src (grph Ygraph)).
     fold sot_Y.
     unfold vert_fn in *; unfold arr_fn in *.
     assert (compose sot_Y af = compose vf sot_X).

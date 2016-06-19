@@ -44,7 +44,7 @@ Definition edge_map {P Q : PrO} (f : PrOHom P Q) (e : edge_of P) : edge_of Q.
 Defined.
 
 Definition PrOGrph (p : PrO) : Grph :=
-    grph _ _ (@graph (undertype_pro p) (edge_of p) pro_src pro_tgt).
+    grph (@graph (undertype_pro p) (edge_of p) pro_src pro_tgt).
 
 Definition PrOGrphHom {P Q : PrO} (f : PrOHom P Q) : GrphHom (PrOGrph P) (PrOGrph Q).
     refine (grph_hom (PrOGrph P) (PrOGrph Q) (pro_fn f) (edge_map f) _ _);
@@ -63,7 +63,7 @@ Definition ProGrphFun : Functor OPrOCat OGrphCat.
 Defined.
 
 Definition Grph_Not_In_Image : Grph :=
-    grph unit bool (graph (fun _ => tt) (fun _ => tt)).
+    grph (@graph _ bool (fun _ => tt) (fun _ => tt)).
 
 Theorem singleton_eq : forall a b : unit, a = b.
     intros a b.
