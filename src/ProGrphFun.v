@@ -67,8 +67,8 @@ Definition Grph_Not_In_Image : Grph :=
 
 Theorem singleton_eq : forall a b : unit, a = b.
     intros a b.
-    case a. case b.
-    reflexivity.
+    case a; case b;
+        reflexivity.
 Qed.
 
 Theorem iso_unit_singleton {O : Type} {f : O -> unit} {g : unit -> O}
