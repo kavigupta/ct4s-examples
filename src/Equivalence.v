@@ -1,6 +1,4 @@
 
-
-
 Class Equiv {O : Type}
         (rel : O -> O -> Prop) :=
     Build_Eq {
@@ -10,9 +8,5 @@ Class Equiv {O : Type}
     }.
 
 Instance EqEq {O : Type} : @Equiv O (@eq O).
-    split.
-         reflexivity.
-         auto.
-         intros x y z xy yz; subst x; subst y; reflexivity.
+    split; intros; subst; auto.
 Qed.
-
