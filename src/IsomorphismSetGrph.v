@@ -14,12 +14,9 @@ Theorem grph_iso_impl_srctgt_iso {X Y : Grph}
     intro iso.
     destruct f as [vf af]; destruct g as [vg ag].
     destruct iso as [proof_left proof_right].
-    unfold comp_grph in *; unfold id_grph in *.
     simpl in *.
     inversion proof_left; inversion proof_right.
-    split.
-        split. auto. auto.
-        split. auto. auto.
+    split; split; auto.
 Qed.
 
 Definition src_or_tgt (is_src : bool) :=
@@ -41,19 +38,16 @@ Theorem inverse_proof
     fold sot_X.
     pose (sot_Y := src_or_tgt is_src (grph Ygraph)).
     fold sot_Y.
-    unfold vert_fn in *; unfold arr_fn in *.
+    simpl in *.
     assert (compose sot_Y af = compose vf sot_X).
-        unfold sot_Y; unfold sot_X; unfold src_or_tgt.
-        case is_src.
-            exact proof_src_f.
-            exact proof_tgt_f.
+        unfold sot_Y; unfold sot_X; unfold src_or_tgt;
+        case is_src; [ apply proof_src_f | apply proof_tgt_f ].
     rename H into proof_f.
     clear proof_src_f proof_tgt_f.
-    unfold vert_of in *; unfold arr_of in *.
     assert (compose vg (compose (compose sot_Y af) ag) = compose (compose vg (compose vf sot_X)) ag).
         rewrite proof_f.
-        pose (ca := comp_assoc ag (compose vf sot_X) vg).
-        rewrite <- ca.
+        pose (ca := comp_assoc ag (compose vf sot_X) vg);
+        rewrite <- ca;
         reflexivity.
     pose (afag := comp_assoc ag af sot_Y); rewrite <- afag in H; clear afag.
     rewrite proof_right_a in H.
@@ -62,7 +56,7 @@ Theorem inverse_proof
     pose (sy := id_right sot_Y).
     pose (sx := id_left sot_X).
     rewrite sy in H; rewrite sx in H.
-    auto.
+    intuition.
 Qed.
 
 Theorem srctgt_iso_impl_graph_iso {X Y : Grph}
@@ -78,20 +72,9 @@ Theorem srctgt_iso_impl_graph_iso {X Y : Grph}
     destruct isoV as [fv gv left_v right_v].
     destruct isoA as [fa ga left_a right_a].
     destruct f as [vertex_f arr_f f_proof_src f_proof_tgt].
-    simpl.
-    Hint Unfold comp_grph id_grph.
-    split.
-        apply grph_hom_eq.
-            repeat autounfold; repeat autounfold in fv.
-            exact fv.
-
-            repeat autounfold; repeat autounfold in fa.
-            exact fa.
-        apply grph_hom_eq.
-            repeat autounfold; repeat autounfold in gv.
-            exact gv.
-
-            repeat autounfold; repeat autounfold in ga.
-            exact ga.
+    simpl in *.
+    split;
+        apply grph_hom_eq;
+        assumption.
 Qed.
 
