@@ -35,12 +35,12 @@ Theorem proedge_eq (T : Type) (rel : T -> T -> Prop) (a b : PrOEdge T rel)
     apply proof_irrelevance.
 Qed.
 
+Hint Resolve proedge_eq.
+
 Definition edge_map {P Q : PrO} (f : PrOHom P Q) (e : edge_of P) : edge_of Q.
     refine (cons_proedge (pro_fn f (pro_src e)) (pro_fn f (pro_tgt e)) _).
     destruct f; destruct e.
-    simpl in *.
-    apply o.
-    exact proof.
+    auto.
 Defined.
 
 Definition PrOGrph (p : PrO) : Grph :=

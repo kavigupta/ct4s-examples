@@ -48,6 +48,8 @@ Theorem pro_hom_eq (P Q : PrO) (f g : PrOHom P Q) : pro_fn f = pro_fn g -> f = g
     trivial.
 Qed.
 
+Hint Resolve pro_hom_eq.
+
 Definition id_pro (P : PrO) : PrOHom P P.
     refine (exist _ (fun (x : undertype_pro P) => x) _).
     trivial.
@@ -61,8 +63,7 @@ Definition comp_pro (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) : PrOHom P R
     destruct g as [g presG].
     simpl in *.
     apply presF.
-    apply presG.
-    assumption.
+    auto.
 Defined.
 
 Instance PrOIsCat : Category id_pro comp_pro.

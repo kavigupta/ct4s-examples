@@ -32,7 +32,7 @@ coq:
 	coqc -R Iso Iso Iso/IsoEquiv.v
 	coqc -R Func Func Func/Forgetful.v
 	coqc ProGrphFun.v
-	# coqc GrphPrOFun.v
+	coqc GrphPrOFun.v
 	cd ..
 
 clean:
