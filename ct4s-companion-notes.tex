@@ -38,7 +38,7 @@ part of one of the Coq files.
 
 \subsection{Categories}
 
-\reference{\subsubsection}{Definition of a Category}{Category.v}{Class Category}
+\reference{\subsubsection}{Definition of a Category}{Cat/Category.v}{Class Category}
 
 \subsubsection{Universes and Sets}
 
@@ -49,32 +49,29 @@ distinct, and the one on the left is in a smaller universe.
 \subsubsection{The category \textbf{Set}}
 
 In Coq, it is more natural to use types rather than sets as a model category, but
-they are fairly similar: \see{Category.v}{Instance CoqCat}. Notice that the proof
-is trivial in all three cases.
+they are fairly similar: \see{Cat/Category.v}{Instance CoqCat}. The proof follows entirely
+from the definitions.
 
 However, we can in fact implement Categories for \textbf{Set}, although it ends
 up being more complicated. Functional equality in \textbf{Set} requires us to prove
-that all the targets and sources line up before and after, which can be a pain.\footnote{
-Also, we have to prove that our proofs are equivalent, which is also a pain, but
-it hopefully more easily resolved.}
+that all the targets and sources line up before and after, which can be solved relatively
+quickly.
 
 \subsubsection{The category \textbf{Fin}}
 
 We can create \textbf{Fin} by requiring sets to be finite. An implementation is
-provided in \texttt{FinCategory.v}. Because the difference between \textbf{Set}
+provided in \texttt{Cat/FinCategory.v}. Because the difference between \textbf{Set}
 and \textbf{Fin} is entirely a result of a restriction on the objects, we can implement
-this in terms of a Full subcategory, which we define in \texttt{FullSubcat.v}.
+this in terms of a Full subcategory, which we define in \texttt{Cat/FullSubcat.v}.
 
 \subsubsection{The category \textbf{Mon}}
 
 An implementation of Monoids, along with monoid homomorphism, is presented in
-\texttt{Monoid.v}. The implementation of Monoids as categories is accomplished
-in \texttt{MonCat.v}. Notice how almost all the actual, non-structural proving
-that occurs in \texttt{MonCat.v} is in defining the composition of monoid
-homomorphism, not in the actual implementation of monoids as a category. This is
-because monoid homomorphism being a category follows directly from functions being
-a category, since they are in essence just functions between monids, but the fact
-that their compositions are homomorphism requires some thought.
+\texttt{Cat/Monoid.v}. The implementation of Monoids as categories is accomplished
+in \texttt{Cat/MonCat.v}. Notice how the proof that Monoid homorphisms compose to form
+monoid homorphisms is as long as the final proof; this is because monoid homorphisms'
+composability requires properties of monoids, while monoid homorphisms' composability's
+associativity is merely a property of functions.
 
 \subsubsection{The category \textbf{Grp}}
 
@@ -100,12 +97,12 @@ I believe that they should be theoretically possible.
 
 \subsubsection{The unit category where morphisms are natural numbers}
 
-An implementation is provided in \texttt{UnitNatMorph.v}. It is a fairly simple
+An implementation is provided in \texttt{Eg/UnitNatMorph.v}. It is a fairly simple
 proof that relies on formal similarities between function composition and multiplication.
 
 \subsubsection{Preorders with Joins}
 
-An implementation of Preorders with joins is provided in \texttt{PreorderJoin.v}.
+An implementation of Preorders with joins is provided in \texttt{Pro/PreorderJoin.v}.
 The categorical instance \textbf{PrOJ} is also provided. Similarly to \textbf{PrO}
 and \textbf{Mon}, most of the real non-entirely-structural work is in proving that
 compositions work.
@@ -117,81 +114,81 @@ doing them in \textbf{Coq} this whole time (i.e., the category of Coq
 types and functions), so it's rather difficult to define finite sets.
 
 However, defining \textbf{Lin} isn't that bad. I implemented the concept of full
-subcategories in \texttt{FullSubcat.v} and implemented \textbf{Lin} in those terms
-in \texttt{LinearOrder.v}
+subcategories in \texttt{Cat/FullSubcat.v} and implemented \textbf{Lin} in those terms
+in \texttt{Pro/LinearOrder.v}
 \stepcounter{subsubsection}
 
 \subsubsection{The category \textbf{Grph}}
 
 An implementation of graphs as defined in 3.3.1 of \emph{CT4S} is provided in
-\texttt{Graph.v}. An implementation of graphs as categories is provided in
-\texttt{GraphCat.v}. Again, most of the work was in being able to compose homorphisms
+\texttt{Grph/Graph.v}. An implementation of graphs as categories is provided in
+\texttt{Grph/GraphCat.v}. Again, most of the work was in being able to compose homorphisms
 to get new homorphisms.
 \stepcounter{subsubsection}
 \stepcounter{subsubsection}
 
 \subsubsection{Isomoprhisms}
 
-A definition of isomorphism is given in \texttt{Isomorphism.v}.
+A definition of isomorphism is given in \texttt{Iso/Isomorphism.v}.
 
 \subsubsection{Isomorphisms in \textbf{Set}}
 
-The definition given in \texttt{Isomorphism.v} is general enough for any category.
+The definition given in \texttt{Iso/Isomorphism.v} is general enough for any category.
 
 \stepcounter{subsubsection}
 \subsubsection{Isomorphisms in \textbf{Grph} imply isomorphisms in \textbf{Set}}
 
-A proof of this fact is given as \texttt{grph\_iso\_impl\_srctgt\_iso} in \texttt{IsomorphismSetGrph.v}.
+A proof of this fact is given as \texttt{grph\_iso\_impl\_srctgt\_iso} in \texttt{Iso/IsomorphismSetGrph.v}.
 Note how the necessary proofs just need to be extracted from the graph proof.
 
 \subsubsection{Isomorphisms in \textbf{Set} imply isomorphisms in \textbf{Grph}}
 
-A proof of this fact is given in \texttt{IsomorphismSetGrph.v}. The major portion of the
+A proof of this fact is given in \texttt{Iso/IsomorphismSetGrph.v}. The major portion of the
 proof is that the function on graphs given by the inverse of each of the components
 of a homorphism is in fact a homorphism. This should probably be a shorter proof,
 I need a better way of encoding diagram chase.
 
 \subsubsection{Isomorphisms as an equivalence relation}
 
-A definition of equivalence is given in \texttt{Equivalence.v}. An implementation
-of isomorphism as equivalence is given in \texttt{IsoEquiv.v}. Note that the proof
+A definition of equivalence is given in \texttt{Equiv/Equivalence.v}. An implementation
+of isomorphism as equivalence is given in \texttt{Iso/IsoEquiv.v}. Note that the proof
 is fairly simple, relying on a few fairly simple diagtram chases.
 
 \subsubsection{A data structure for categories}
 
 The description in \emph{CT4S} in this section is basically describing the encoding
-of categories as data structures. This definition is given in \texttt{Category.v}.
+of categories as data structures. This definition is given in \texttt{Cat/Category.v}.
 
 \subsection{Functors}
 
 \subsubsection{Definition of Functors}
 
-A definition of functors is given in \texttt{Functor.v}.
+A definition of functors is given in \texttt{Func/Functor.v}.
 
 \subsubsection{$\mathbf{Mon} \to \mathbf{Coq}$}
 
 Instead of a function from monoids to sets, we can map monoids to their underlying types, because
 of our usage of \textbf{Coq} rather than \textbf{Set}. An implementation is provided
-in \texttt{Forgetful.v}, and the corresponding \textbf{Cat} objects are provided in \texttt{Monoid.v}
-and \texttt{Category.v}. Note how the entire proof is in unfolding a few definitions and
+in \texttt{Func/Forgetful.v}, and the corresponding \textbf{Cat} objects are provided in \texttt{Mon/Monoid.v}
+and \texttt{Cat/Category.v}. Note how the entire proof is in unfolding a few definitions and
 asserting reflexivity.
 
 \subsubsection{$\mathbf{Grp} \to \mathbf{Mon}$}
 
 A similar transformation can be defined. We again just need to unwrap all the Group
 definitions everything reduces to reflexive relations. An implementation is provided
-in \texttt{Forgetful.v}.
+in \texttt{Func/Forgetful.v}.
 
 \stepcounter{subsubsection}\stepcounter{subsubsection}
 
 \subsubsection{$\mathbf{Set} \to \mathbf{Fin}$}
 
-Again, a forgetful functor, defined in \texttt{Forgetful.v}, can be defined for all full
+Again, a forgetful functor, defined in \texttt{Func/Forgetful.v}, can be defined for all full
 subcategories and then specialized to Set and Fin.
 
 \subsubsection{$\mathbf{Lin} \to \mathbf{PrO}$}
 
-A forgetful functor, defined in \texttt{Forgetful.v} is implemented as another
+A forgetful functor, defined in \texttt{Func/Forgetful.v} is implemented as another
 implementation of the general forgetful functor from a full subcategory to its
 containing category.
 
