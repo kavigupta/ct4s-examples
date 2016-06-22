@@ -1,7 +1,7 @@
 
 
 Require Import Graph.
-Require Import Category.
+Require Import Cat.Category.
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.Classical_Prop.
 

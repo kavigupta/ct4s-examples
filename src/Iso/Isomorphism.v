@@ -1,5 +1,5 @@
 
-Require Import Category.
+Require Import Cat.Category.
 
 Inductive Isomorphism
     {O : Type} {M : O -> O -> Type}

@@ -3,11 +3,11 @@ Require Import Coq.Logic.FunctionalExtensionality.
 Require Import Coq.Logic.Classical_Prop.
 Require Import Coq.Program.Basics.
 
-Require Import Preorder.
-Require Import Graph.
-Require Import Functor.
-Require Import Category.
-Require Import GraphCat.
+Require Import Pro.Preorder.
+Require Import Grph.Graph.
+Require Import Func.Functor.
+Require Import Cat.Category.
+Require Import Grph.GraphCat.
 Require Import Iso.Isomorphism.
 Require Import Iso.IsomorphismSetGrph.
 
@@ -106,4 +106,3 @@ Theorem not_in_image : forall p, not (Isomorphic GrphCat (PrOGrph p) Grph_Not_In
     rewrite (H0 true) in H1; rewrite (H0 false) in H1.
     discriminate.
 Qed.
-            

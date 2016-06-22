@@ -1,6 +1,6 @@
 
-Require Import Category.
-Require Import FullSubcat.
+Require Import Cat.Category.
+Require Import Cat.FullSubcat.
 Require Import Preorder.
 
 Definition Is_Partial (P : PrO) : Prop :=

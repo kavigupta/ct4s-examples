@@ -1,6 +1,6 @@
-Require Import Monoid.
-Require Import MonCat.
-Require Import Category.
+Require Import Mon.Monoid.
+Require Import Mon.MonCat.
+Require Import Cat.Category.
 
 Class Group (M : Mon)
         (inv : undertype_mon M -> undertype_mon M)

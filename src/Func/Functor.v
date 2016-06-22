@@ -1,9 +1,9 @@
 
-Require Import Category.
+Require Import Cat.Category.
 
 Inductive Functor
     (A B : Cat)
-        : Type := 
+        : Type :=
     cons_functor
         (ob_fn : ob A -> ob B)
         (morph_fn : forall {c d : ob A}, morph A c d -> morph B (ob_fn c) (ob_fn d))

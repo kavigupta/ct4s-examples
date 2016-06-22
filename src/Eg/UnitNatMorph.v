@@ -1,5 +1,5 @@
 
-Require Import Category.
+Require Import Cat.Category.
 Require Import Coq.Arith.Mult.
 
 Instance UnmCat : @Category unit _ (fun _ => 1) (fun _ _ _ => mult).

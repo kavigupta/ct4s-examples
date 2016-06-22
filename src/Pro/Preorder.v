@@ -3,7 +3,7 @@ Require Import Coq.Arith.Le.
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.Classical_Prop.
 
-Require Import Category.
+Require Import Cat.Category.
 
 Class Preorder {O : Type} (M : O -> O -> Prop) : Prop
     := Build_Preorder {

@@ -1,14 +1,14 @@
-Require Import Category.
-Require Import Monoid.
-Require Import MonCat.
-Require Import Group.
+Require Import Cat.Category.
+Require Import Mon.Monoid.
+Require Import Mon.MonCat.
+Require Import Grp.Group.
 Require Import Functor.
-Require Import FullSubcat.
-Require Import SetCategory.
-Require Import FinCategory.
+Require Import Cat.FullSubcat.
+Require Import Cat.SetCategory.
+Require Import Cat.FinCategory.
 Require Import Coq.Sets.Finite_sets.
-Require Import Preorder.
-Require Import LinearOrder.
+Require Import Pro.Preorder.
+Require Import Pro.LinearOrder.
 
 Definition MonCoqFun : Functor OMonCat OCoqCat.
    Hint Unfold mon_hom_fn id_of comp_of id_mon comp_mon OCoqCat OMonCat.

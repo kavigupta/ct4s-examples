@@ -1,6 +1,6 @@
 Require Import Coq.Program.Basics.
 
-Require Import Category.
+Require Import Cat.Category.
 Require Import Monoid.
 
 Definition id_mon (M : Mon) : Mon_Hom M M.

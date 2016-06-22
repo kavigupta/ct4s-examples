@@ -1,8 +1,8 @@
 
-Require Import Category.
+Require Import Cat.Category.
 Require Import Isomorphism.
-Require Import Graph.
-Require Import GraphCat.
+Require Import Grph.Graph.
+Require Import Grph.GraphCat.
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.FunctionalExtensionality.
 

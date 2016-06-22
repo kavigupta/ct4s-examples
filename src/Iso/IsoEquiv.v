@@ -1,7 +1,7 @@
 
 Require Import Isomorphism.
-Require Import Equivalence.
-Require Import Category.
+Require Import Equiv.Equivalence.
+Require Import Cat.Category.
 
 Instance IsoEq
     {O : Type} {M : O -> O -> Type}
@@ -33,4 +33,4 @@ Instance IsoEq
             ];
             rewrite id_right;
             assumption.
-Qed. 
+Qed.
