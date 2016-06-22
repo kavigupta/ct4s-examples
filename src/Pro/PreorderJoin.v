@@ -79,7 +79,7 @@ Definition comp_proj {P Q R : PrOJ} (f : PrOJHom Q R) (g : PrOJHom P Q) : PrOJHo
     reflexivity.
 Defined.
 
-Instance PrOJCat : Category id_proj (@comp_proj).
+Instance PrJIsCat : Category id_proj (@comp_proj).
     split;
         intros;
         apply proj_hom_eq;

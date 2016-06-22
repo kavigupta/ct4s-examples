@@ -70,7 +70,7 @@ Definition comp_grp {X Y Z : Grp}
         : Grp_Hom X Z
     := comp_mon f g.
 
-Instance GrpCat : Category
+Instance GrpIsCat : Category
         (@id_grp)
         (@comp_grp).
     split;
@@ -84,6 +84,6 @@ Instance GrpCat : Category
         reflexivity.
 Qed.
 
-Definition OGrpCat : Cat :=
-    cons_cat Grp Grp_Hom (@id_grp) (@comp_grp) GrpCat.
+Definition GrpCat : Cat :=
+    cons_cat Grp Grp_Hom (@id_grp) (@comp_grp) GrpIsCat.
 

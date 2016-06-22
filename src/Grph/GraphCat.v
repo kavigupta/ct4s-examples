@@ -69,14 +69,14 @@ Definition comp_grph (X Y Z : Grph) (f : GrphHom Y Z) (g : GrphHom X Y) : GrphHo
         reflexivity.
 Defined.
 
-Instance GrphCat : Category id_grph comp_grph.
+Instance GrphIsCat : Category id_grph comp_grph.
     split;
         intros;
         apply grph_hom_eq;
         reflexivity.
 Qed.
 
-Definition OGrphCat : Cat :=
-    cons_cat Grph GrphHom id_grph comp_grph GrphCat.
+Definition GrphCat : Cat :=
+    cons_cat Grph GrphHom id_grph comp_grph GrphIsCat.
 
 

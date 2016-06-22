@@ -2,7 +2,7 @@
 Require Import Cat.Category.
 Require Import Coq.Arith.Mult.
 
-Instance UnmCat : @Category unit _ (fun _ => 1) (fun _ _ _ => mult).
+Instance UnmIsCat : @Category unit _ (fun _ => 1) (fun _ _ _ => mult).
     split;
         intros.
         apply mult_assoc.

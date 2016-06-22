@@ -42,7 +42,7 @@ Definition comp_set
     intuition.
 Defined.
 
-Instance SetCat (U : Type) : Category id_set (@comp_set U).
+Instance SetIsCat (U : Type) : Category id_set (@comp_set U).
     Hint Unfold comp_set set_hom_fn id_set.
     split; intros; apply set_hom_eq;
         try (
@@ -57,5 +57,5 @@ Instance SetCat (U : Type) : Category id_set (@comp_set U).
         reflexivity.
 Qed.
 
-Definition OSetCat (U : Type) : Cat :=
-    cons_cat (Ensemble U) set_hom id_set (@comp_set U) (SetCat U).
+Definition SetCat (U : Type) : Cat :=
+    cons_cat (Ensemble U) set_hom id_set (@comp_set U) (SetIsCat U).

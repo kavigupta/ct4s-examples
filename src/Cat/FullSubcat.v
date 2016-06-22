@@ -48,7 +48,7 @@ Definition comp_of (fsc : FullSubcat)
         with cons_full_subcat _ _ _ com _ _ => com
     end) _ _ _ f g.
 
-Instance SubCat (fsc : FullSubcat) : Category (@id_of fsc) (@comp_of fsc).
+Instance SubIsCat (fsc : FullSubcat) : Category (@id_of fsc) (@comp_of fsc).
     destruct fsc.
     Hint Unfold id_of comp_of morphism_of.
     split;
@@ -64,4 +64,4 @@ Qed.
 
 Definition full_subcat (c : Cat) (filter : ob c -> Prop) : Cat :=
     let fsc := cons_full_subcat (ob c) (morph c) (idc) (@comp c) (cat_of c) filter in
-        cons_cat (object_of fsc) (morphism_of fsc) (id_of fsc) (@comp_of fsc) (SubCat fsc).
+        cons_cat (object_of fsc) (morphism_of fsc) (id_of fsc) (@comp_of fsc) (SubIsCat fsc).

@@ -51,8 +51,8 @@ Definition PrOGrphHom {P Q : PrO} (f : PrOHom P Q) : GrphHom (PrOGrph P) (PrOGrp
         reflexivity.
 Defined.
 
-Definition ProGrphFun : Functor OPrOCat OGrphCat.
-    refine (cons_functor OPrOCat OGrphCat PrOGrph (@PrOGrphHom) _ _);
+Definition ProGrphFun : Functor PrOCat GrphCat.
+    refine (cons_functor PrOCat GrphCat PrOGrph (@PrOGrphHom) _ _);
         intros;
         apply grph_hom_eq;
         try reflexivity;
@@ -72,7 +72,7 @@ Theorem singleton_eq : forall a b : unit, a = b.
 Qed.
 
 Theorem iso_unit_singleton {O : Type} {f : O -> unit} {g : unit -> O}
-        : Isomorphism CoqCat O unit f g -> forall (a b : O), a = b.
+        : Isomorphism CoqIsCat O unit f g -> forall (a b : O), a = b.
     intros H; inversion H.
     intros a b.
     pose (eqf := singleton_eq (f a) (f b)).
@@ -84,7 +84,7 @@ Theorem iso_unit_singleton {O : Type} {f : O -> unit} {g : unit -> O}
     auto.
 Qed.
 
-Theorem not_in_image : forall p, not (Isomorphic GrphCat (PrOGrph p) Grph_Not_In_Image).
+Theorem not_in_image : forall p, not (Isomorphic GrphIsCat (PrOGrph p) Grph_Not_In_Image).
     intros p H.
     destruct p as [O M _refl _trans].
     destruct H as [f [g H]].

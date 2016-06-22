@@ -1,7 +1,7 @@
 Require Import Coq.Program.Basics.
 
 Require Import Cat.Category.
-Require Import Monoid.
+Require Import Mon.Monoid.
 
 Definition id_mon (M : Mon) : Mon_Hom M M.
     refine (exist _ id _); split; trivial.
@@ -57,7 +57,7 @@ Definition comp_mon {M N P : Mon}
     reflexivity.
 Defined.
 
-Instance MonCat : Category
+Instance MonIsCat : Category
         id_mon
         (@comp_mon).
     split;
@@ -70,5 +70,5 @@ Instance MonCat : Category
         trivial.
 Qed.
 
-Definition OMonCat : Cat :=
-    cons_cat Mon Mon_Hom id_mon (@comp_mon) MonCat.
+Definition MonCat : Cat :=
+    cons_cat Mon Mon_Hom id_mon (@comp_mon) _.

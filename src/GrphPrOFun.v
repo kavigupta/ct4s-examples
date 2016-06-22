@@ -35,7 +35,7 @@ Definition HasPathHom (P Q : Grph) (f : GrphHom P Q) : PrOHom (HasPathO P) (HasP
     intros x y H.
     induction H.
         exact (refl Q).
-        
+
         destruct proof as [pa pb].
         refine (@item Q (vert_fn a) (vert_fn b) (arr_fn edge) _).
             split.
@@ -45,33 +45,33 @@ Definition HasPathHom (P Q : Grph) (f : GrphHom P Q) : PrOHom (HasPathO P) (HasP
                 unfold compose in proof_src.
                 exact proof_src.
             exact (H edge).
-            
+
             rewrite <- pb.
             assert (forall edge, tgt_of Q (arr_fn edge) = vert_fn (tgt_of P edge)).
                 apply equal_f.
                 unfold compose in proof_tgt.
                 exact proof_tgt.
             exact (H edge).
-        
+
         exact (trans Q IHhas_path1 IHhas_path2).
 Defined.
 
-Definition HasPath : Functor OGrphCat OPrOCat.
-    Hint Unfold HasPathHom HasPathO OGrphCat OPrOCat idc.
-    refine (cons_functor OGrphCat OPrOCat HasPathO HasPathHom _ _).
+Definition HasPath : Functor GrphCat PrOCat.
+    Hint Unfold HasPathHom HasPathO GrphCat PrOCat idc.
+    refine (cons_functor GrphCat PrOCat HasPathO HasPathHom _ _).
         intros x.
         destruct x.
         apply pro_hom_eq.
         repeat autounfold.
         reflexivity.
-        
+
         intros.
         apply pro_hom_eq.
         repeat autounfold.
         reflexivity.
 Defined.
 
-Definition from_paths_pro_to_original : forall p, PrOHom (HasPathO (PrOGrph p)) p. 
+Definition from_paths_pro_to_original : forall p, PrOHom (HasPathO (PrOGrph p)) p.
     intros p.
     refine (cons_pro_hom (HasPathO (PrOGrph p)) p (fun x => x) _).
     intros x y.
@@ -82,13 +82,13 @@ Definition from_paths_pro_to_original : forall p, PrOHom (HasPathO (PrOGrph p)) 
     intro H.
     induction H.
         exact (r a).
-        
+
         simpl in *.
         destruct edge.
         destruct proof as [px py].
         subst a0; subst b0.
         exact proof0.
-        
+
         simpl in *.
         exact (t _ _ _ IHhas_path1 IHhas_path2).
 Defined.
@@ -125,7 +125,7 @@ Theorem all_pro_in_image
         apply pro_hom_eq.
         repeat autounfold.
         reflexivity.
-        
+
         apply pro_hom_eq.
         repeat autounfold.
         reflexivity.
@@ -152,7 +152,7 @@ Theorem all_pro_in_image2
         apply functional_extensionality.
         intro y.
         remember (has_path (grph O (PrOEdge O M) (graph O (PrOEdge O M) pro_src pro_tgt)) x y) as lhs.
-        
+
     Print f_equal4.
     refine (f_equal4 _ _ _ _ _).
 Qed.

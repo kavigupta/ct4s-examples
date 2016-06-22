@@ -13,7 +13,7 @@ Class Category {O : Type} {M : O -> O -> Type}
         id_right : forall {a b : O} (f : M a b), comp f id = f
     }.
 
-Instance CoqCat : Category
+Instance CoqIsCat : Category
         (@id)
         (@compose).
     split; trivial.
@@ -35,14 +35,14 @@ Definition morph (c : Cat) : ob c -> ob c -> Type :=
 Definition idc {c : Cat} : forall (x : ob c), morph c x x :=
     match c with cons_cat _ _ i _ _ => i end.
 
-Definition comp {c : Cat} : forall {x y z : ob c}, 
+Definition comp {c : Cat} : forall {x y z : ob c},
         morph c y z -> morph c x y -> morph c x z :=
     match c with cons_cat _ _ _ c _ => c end.
 
 Definition cat_of (c : Cat) : Category (@idc c) (@comp c) :=
     match c with cons_cat _ _ _ _ ca => ca end.
 
-Definition OCoqCat : Cat :=
-    cons_cat Type arrow (@id) (@compose) CoqCat.
+Definition CoqCat : Cat :=
+    cons_cat Type arrow (@id) (@compose) CoqIsCat.
 
 Notation "a ** b" := (comp a b) (at level 40, left associativity).

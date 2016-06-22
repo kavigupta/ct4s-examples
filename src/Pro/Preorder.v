@@ -65,7 +65,7 @@ Definition comp_pro (P Q R : PrO) (f : PrOHom Q R) (g : PrOHom P Q) : PrOHom P R
     assumption.
 Defined.
 
-Instance PrOCat : Category id_pro comp_pro.
+Instance PrOIsCat : Category id_pro comp_pro.
     split;
        intros;
        apply pro_hom_eq;
@@ -75,7 +75,7 @@ Instance PrOCat : Category id_pro comp_pro.
        reflexivity.
 Qed.
 
-Definition OPrOCat : Cat
-    := cons_cat PrO PrOHom id_pro comp_pro PrOCat.
+Definition PrOCat : Cat
+    := cons_cat PrO PrOHom id_pro comp_pro PrOIsCat.
 
 
