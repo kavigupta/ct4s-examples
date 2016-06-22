@@ -26,17 +26,15 @@ coq:
 	coqc LinearOrder.v
 	coqc Graph.v
 	coqc GraphCat.v
-	coqc Isomorphism.v
-	coqc IsomorphismSetGrph.v
+	coqc -R Iso Iso Iso/Isomorphism.v
+	coqc -R Iso Iso Iso/IsomorphismSetGrph.v
 	coqc Equivalence.v
-	coqc IsoEquiv.v
+	coqc -R Iso Iso Iso/IsoEquiv.v
 	coqc Forgetful.v
 	coqc ProGrphFun.v
-	coqc ProGrphFun.v
-	coqc GrphPrOFun.v
+	# coqc GrphPrOFun.v
 	cd ..
 
 clean:
-	cd src
-	rm *.glob
-	rm *.vo
+	rm **/*.glob
+	rm **/*.vo

@@ -8,8 +8,8 @@ Require Import Graph.
 Require Import Functor.
 Require Import Category.
 Require Import GraphCat.
-Require Import Isomorphism.
-Require Import IsomorphismSetGrph.
+Require Import Iso.Isomorphism.
+Require Import Iso.IsomorphismSetGrph.
 
 Inductive PrOEdge (T : Type) (rel : T -> T -> Prop) :=
     cons_proedge (a b : T) (proof : rel a b).

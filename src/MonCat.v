@@ -45,13 +45,9 @@ Definition comp_mon {M N P : Mon}
     (f : Mon_Hom N P)
     (g : Mon_Hom M N)
         : Mon_Hom M P.
-    refine (match f with
-            exist ff (conj zf pf) =>
-                match g with
-                    exist gg (conj zg pg) =>
-                        exist _ (compose ff gg) _
-                end
-        end).
+    destruct f as [ff [zf pf]];
+    destruct g as [gg [zg pg]].
+    refine (exist _ (compose ff gg) _).
     split; intros;
     unfold compose;
     [
