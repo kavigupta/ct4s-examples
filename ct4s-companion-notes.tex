@@ -30,7 +30,20 @@ in terms of chapter, section, etc, starting at chapter 4, where Spivak introduce
 formal category-theoretic concepts. Each section will refer to the appropriate
 part of one of the Coq files.
 
-\setcounter{chapter}{3}
+\setcounter{chapter}{2}
+\chapter{Categories and Functors, Without Admitting It}
+\setcounter{section}{2}
+\section{Graphs}
+\subsection{Definition and Examples}
+A definition is given in \texttt{Grph/Graph.v}. A definition of linear graphs is
+given in \texttt{Grph/LinGraph.v}.
+\section{Orders}
+\subsection{Definitions of Preorder, partial order, linear order}
+Definitions of Preorders, partial orders, and linear orders are given in \texttt{Pro/Preorder.v}
+and \texttt{Pro/LinearOrder.v} respectively.
+
+A definition of Finite linear orders is given in \texttt{Pro/LinearOrder.v}.
+
 \chapter{Basic Category Theory}
 
 
@@ -220,8 +233,8 @@ The conclusion then reduces to the idea that any homorphism between any two Grph
 in the image of our above functor are preserved by the composition of the above
 functor and HasPath.
 
-Unfortunately, I haven't been able to express this properly. I will come back
-to this at a later point. %TODO
+Unfortunately, I haven't been able to express this properly without a concept of
+a category of categories; I will come back to this point.
 
 \stepcounter{subsubsection}
 
@@ -239,5 +252,19 @@ portion of the work is in proving that the isomorphic functions, which are both
 identity on objects, are indeed preorder homomorphisms; otherwise, the actual proof
 of isomorphism is trivial as a consequence of the fact that both the functions are
 the identity.
+
+Again, the final point can only be proven with the concept of a category of categories,
+which I will get back to later.
+
+\subsubsection{Composition of Functors}
+
+I'll get back to it after defining the category of categories.
+
+\subsubsection{Linear Orders and Graphs}
+
+I was not able to do this proof. I will get back to it once I have a better handle
+on the problem and/or dependent typing strategies in Coq.
+
+\stepcounter{subsubsection}\stepcounter{subsubsection}
 
 \end{document}

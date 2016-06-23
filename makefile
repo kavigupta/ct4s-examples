@@ -24,6 +24,7 @@ coq:
 	coqc -R Pro Pro Pro/PreorderJoin.v
 	coqc -R Eg Eg Eg/UnitNatMorph.v
 	coqc -R Pro Pro Pro/LinearOrder.v
+	coqc -R Grph Grph Grph/LinGraph.v
 	coqc -R Grph Grph Grph/Graph.v
 	coqc -R Grph Grph Grph/GraphCat.v
 	coqc -R Iso Iso Iso/Isomorphism.v
@@ -31,6 +32,7 @@ coq:
 	coqc -R Equiv Equiv Equiv/Equivalence.v
 	coqc -R Iso Iso Iso/IsoEquiv.v
 	coqc -R Func Func Func/Forgetful.v
+	coqc -R Eg Eg Eg/LinGraphPreorder.v
 	coqc ProGrphFun.v
 	coqc GrphPrOFun.v
 	cd ..

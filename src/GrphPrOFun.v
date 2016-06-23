@@ -23,8 +23,12 @@ Inductive has_path (G : Grph) : vert_of G -> vert_of G -> Prop :=
         (proof_g : has_path G a b)
             : has_path G a c.
 
-Definition HasPathO (G : Grph) : PrO :=
-    cons_pro (vert_of G) (has_path G) (@refl G) (@trans G).
+Definition HasPathO (G : Grph) : PrO.
+    refine (cons_pro (vert_of G) (has_path G) _).
+    split.
+        apply refl.
+        apply trans.
+Defined.
 
 Hint Resolve refl trans item.
 
@@ -54,7 +58,7 @@ Definition from_paths_pro_to_original : forall p, PrOHom (HasPathO (PrOGrph p)) 
     intros p.
     refine (exist _ (fun x => x) _).
     intros x y.
-    destruct p as [O M r t].
+    destruct p as [O M [r t]].
     simpl.
     intro H.
     induction H; simpl in *; auto.

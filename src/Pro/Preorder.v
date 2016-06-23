@@ -20,14 +20,13 @@ Qed.
 Inductive PrO : Type
     := cons_pro
         (O : Type) (M : O -> O -> Prop)
-        (refl : forall x : O, M x x)
-        (trans : forall a b c : O, M b c -> M a b -> M a c).    
+        (proof : Preorder M).    
 
 Definition undertype_pro (P : PrO) : Type
-    := match P with cons_pro U _ _ _ => U end.
+    := match P with cons_pro U _ _ => U end.
 
 Definition ordering (P : PrO) : undertype_pro P -> undertype_pro P -> Prop
-    := match P with cons_pro _ o _ _ => o end.
+    := match P with cons_pro _ o _ => o end.
 
 Definition PrOHom (P Q : PrO) : Type := 
     {f : undertype_pro P -> undertype_pro Q
