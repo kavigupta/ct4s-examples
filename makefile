@@ -33,6 +33,7 @@ coq:
 	coqc -R Iso Iso Iso/IsoEquiv.v
 	coqc -R Func Func Func/Forgetful.v
 	coqc -R Eg Eg Eg/LinGraphPreorder.v
+	coqc -R Mon Mon Mon/FreeMonoid.v
 	coqc ProGrphFun.v
 	coqc GrphPrOFun.v
 	cd ..
