@@ -14,3 +14,10 @@ Inductive Functor
                 (f : morph A y z)
                 (g : morph A x y),
                     morph_fn (f ** g) = morph_fn f ** morph_fn g).
+
+Definition ob_fn {A B : Cat} (f : Functor A B) : ob A -> ob B :=
+    match f with cons_functor f' _ _ _ => f' end.
+
+Definition morph_fn {A B : Cat} {c d : ob A} (f : Functor A B)
+        : morph A c d -> morph B (ob_fn f c) (ob_fn f d) :=
+    match f with cons_functor _ f' _ _ => f' c d end.

@@ -30,7 +30,12 @@ in terms of chapter, section, etc, starting at chapter 4, where Spivak introduce
 formal category-theoretic concepts. Each section will refer to the appropriate
 part of one of the Coq files.
 
-\setcounter{chapter}{2}
+\setcounter{chapter}{1}
+\chapter{The Category of Sets}
+\section{Sets and Functions}
+An implementation of the isomorphism between RNA and DNA is given in \texttt{Iso/RNADNA.v}. These
+definitions and proofs rely on later chapters' definitions.
+
 \chapter{Categories and Functors, Without Admitting It}
 \setcounter{section}{2}
 \section{Graphs}
@@ -270,5 +275,11 @@ on the problem and/or dependent typing strategies in Coq.
 \subsubsection{Free Monoids}
 
 An implementation of free monoids is provided in \texttt{Mon/FreeMonoid.v}.
+
+\subsubsection{Free Monoid Lifts DNA/RNA Isomorphism}
+
+An implementation is provided in \texttt{Func/FuncIso.v}; this implementation is
+significantly more general, it is a proof that isomorphisms are in general preserved
+by functors.
 
 \end{document}
