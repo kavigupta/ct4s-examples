@@ -2,7 +2,7 @@
 filename = ct4s-companion-notes
 
 target:
-	make coq
+	make build
 	make clean
 	make notes
 
@@ -10,7 +10,7 @@ notes:
 	pdflatex $(filename).tex
 	rm $(filename).log $(filename).aux
 
-coq:
+build:
 	cd src
 	coqc -R Cat Cat Cat/Category.v
 	coqc -R Func Func Func/Functor.v
