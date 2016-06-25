@@ -38,6 +38,7 @@ build:
 	coqc -R Eg Eg Eg/LinGraphPreorder.v
 	coqc -R Func Func Func/FuncIso.v
 	coqc -R Grph Grph Grph/Paths.v
+	coqc -R Grph Grph Grph/PathsFunctor.v
 	cd ..
 
 clean:
