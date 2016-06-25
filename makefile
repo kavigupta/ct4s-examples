@@ -37,6 +37,7 @@ build:
 	coqc GrphPrOFun.v
 	coqc -R Eg Eg Eg/LinGraphPreorder.v
 	coqc -R Func Func Func/FuncIso.v
+	coqc -R Grph Grph Grph/Paths.v
 	cd ..
 
 clean:
