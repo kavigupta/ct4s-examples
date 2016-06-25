@@ -11,10 +11,13 @@ Require Import ProofIrrelevance.
 Section Paths.
     
     Variable V A : Type.
-    Variable src tgt : A -> V.
+    Variable g : Graph V A.
     
-    Fixpoint LinedUp (S T : V) (values : list A) : Prop :=
-        match values with
+    Notation "'src'" := (match g with graph s _ => s end) (at level 0).
+    Notation "'tgt'" := (match g with graph _ t => t end) (at level 0).
+
+    Fixpoint LinedUp (S T : V) (segments : list A) : Prop :=
+        match segments with
             | nil => S = T
             | first :: rest => src first = S /\ LinedUp (tgt first) T rest
         end.
@@ -22,11 +25,11 @@ Section Paths.
         cons_path (S T : V) (values : list A) (proof : LinedUp S T values).
     Definition src_of' (x : Path) := match x with cons_path s _ _ _ => s end.
     Definition tgt_of' (x : Path) := match x with cons_path _ t _ _ => t end.
-    Definition values_of (x : Path) := match x with cons_path _ _ v _ => v end.
+    Definition segments_of (x : Path) := match x with cons_path _ _ v _ => v end.
     Theorem path_eq : forall x y,
             src_of' x = src_of' y
                 -> tgt_of' x = tgt_of' y
-                -> values_of x = values_of y
+                -> segments_of x = segments_of y
                 -> x = y.
         intros.
         destruct x; destruct y.
@@ -34,40 +37,32 @@ Section Paths.
         f_equal.
         apply proof_irrelevance.
     Qed.
-    Definition graph' := graph src_of' tgt_of'.
+    Definition paths_graph := graph src_of' tgt_of'.
 End Paths.
 
-Arguments cons_path {V A src tgt} S T values proof.
-
-Definition path_arrow {V A} (g : Graph V A) : Type :=
-    match g with
-        graph src tgt => Path _ _ src tgt
-    end.
-
-Definition path_graph {V A} (g : Graph V A) : Graph V (path_arrow g) :=
-    match g with
-        graph src tgt => graph' _ _ src tgt
-    end.
+Arguments LinedUp {V A} g S T segments.
+Arguments Path {V A} g.
+Arguments cons_path {V A g} S T values proof.
+Arguments paths_graph {V A} g.
 
 Definition path_grph (g : Grph) : Grph :=
-    grph (graph' _ _ (src_of g) (tgt_of g)).
+    grph (paths_graph (graph_of g)).
 
 Section MapPaths.
     Variable A B : Grph.
     Variable f : GrphHom A B.
     Theorem value :
         forall path s t,
-            LinedUp _ _ (src_of A) (tgt_of A) s t path
-                -> LinedUp _ _ (src_of B) (tgt_of B) (vert_fn f s) (vert_fn f t) (map (arr_fn f) path).
+            LinedUp (graph_of A) s t path
+                -> LinedUp (graph_of B) (vert_fn f s) (vert_fn f t) (map (arr_fn f) path).
         intros path.
         destruct f as [vf af prs prt].
-        induction path.
-            simpl in *.
+        destruct A; destruct B.
+        induction path; simpl in *.
             intros; subst; reflexivity.
             
             intros s t H.
             inversion H; subst.
-            simpl in *.
             apply equal_f with (x := a) in prs.
             apply equal_f with (x := a) in prt.
             unfold compose in *.

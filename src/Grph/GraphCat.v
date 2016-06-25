@@ -1,6 +1,6 @@
 
 
-Require Import Graph.
+Require Import Grph.Graph.
 Require Import Cat.Category.
 Require Import Coq.Program.Basics.
 Require Import Coq.Logic.Classical_Prop.
@@ -15,6 +15,9 @@ Definition vert_of (X : Grph) : Type :=
 
 Definition arr_of (X : Grph) : Type :=
     match X with grph _ A _ => A end.
+
+Definition graph_of (g : Grph) : Graph (vert_of g) (arr_of g) :=
+    match g with grph _ _ g => g end.
 
 Definition src_of (X : Grph) : arr_of X -> vert_of X :=
     match X with grph _ _ g => match g with graph src _ => src end end.
