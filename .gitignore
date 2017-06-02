@@ -1,3 +1,5 @@
 ct4s-companion-notes.pdf
 *.glob
 *.vo
+*.fdb_latexmk
+*.fls
