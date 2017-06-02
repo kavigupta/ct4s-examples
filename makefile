@@ -12,6 +12,8 @@ notes:
 
 build:
 	cd src
+	coqc -R Quot Quot Quot/Quotient.v
+	coqc -R LimColimCoq LimColimCoq LimColimCoq/Equalizer.v
 	coqc -R Cat Cat Cat/Category.v
 	coqc -R Func Func Func/Functor.v
 	coqc -R Cat Cat Cat/FullSubcat.v
