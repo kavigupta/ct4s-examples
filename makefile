@@ -12,6 +12,8 @@ notes:
 
 build:
 	cd src
+	coqc -R Axioms Axioms Axioms/Classical.v
+	coqc -R Equiv Equiv Equiv/Equivalence.v
 	coqc -R Cat Cat Cat/Category.v
 	coqc -R Func Func Func/Functor.v
 	coqc -R Cat Cat Cat/FullSubcat.v
@@ -29,7 +31,6 @@ build:
 	coqc -R Grph Grph Grph/LinGraph.v
 	coqc -R Iso Iso Iso/Isomorphism.v
 	coqc -R Iso Iso Iso/IsomorphismSetGrph.v
-	coqc -R Equiv Equiv Equiv/Equivalence.v
 	coqc -R Iso Iso Iso/IsoEquiv.v
 	coqc -R Func Func Func/Forgetful.v
 	coqc -R Mon Mon Mon/FreeMonoid.v
