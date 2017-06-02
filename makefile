@@ -43,5 +43,5 @@ build:
 	cd ..
 
 clean:
-	rm src/*.glob src/Cat/*.glob src/Eg/*.glob src/Equiv/*.glob src/Func/*.glob src/Mon/*.glob src/Grp/*.glob src/Grph/*.glob src/Iso/*.glob src/Pro/*.glob
-	rm src/*.vo src/Cat/*.vo src/Eg/*.vo src/Equiv/*.vo src/Func/*.vo src/Mon/*.vo src/Grp/*.vo src/Grph/*.vo src/Iso/*.vo src/Pro/*.vo
+	find . -type f -name '*.vo' -delete
+	find . -type f -name '*.glob' -delete
