@@ -36,12 +36,20 @@ part of one of the Coq files.
 An implementation of the isomorphism between RNA and DNA is given in \texttt{Iso/RNADNA.v}. These
 definitions and proofs rely on later chapters' definitions.
 
+\setcounter{section}{5}
+\section{Finite Colimits in \textbf{Set}}
+\subsection{Background: equivalence relations}
+A definition of equivalence relations along with the ability to generate them, is given in \texttt{Equiv/Equivalence.v}.
+
 \chapter{Categories and Functors, Without Admitting It}
 \setcounter{section}{2}
 \section{Graphs}
 \subsection{Definition and Examples}
 A definition is given in \texttt{Grph/Graph.v}. A definition of linear graphs is
 given in \texttt{Grph/LinGraph.v}.
+\subsection{Paths}
+A definition is given in \texttt{Grph/Paths.v}.
+
 \section{Orders}
 \subsection{Definitions of Preorder, partial order, linear order}
 Definitions of Preorders, partial orders, and linear orders are given in \texttt{Pro/Preorder.v}
@@ -286,7 +294,7 @@ by functors.
 
 \subsubsection{The Paths Functor}
 
-An implementation of the paths functor is provided is \texttt{Grph/Paths.v}.
+An implementation of the paths functor is provided is \texttt{Grph/PathsFunctor.v}.
 
 \stepcounter{subsubsection}
 \subsubsection{Lifting Isomorphisms}
